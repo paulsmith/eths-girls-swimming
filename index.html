@@ -272,12 +272,12 @@
 
     <div class="container">
         <div class="calendar-actions">
-            <button class="btn btn-google" onclick="subscribeToGoogleCalendar()">
+            <a href="https://calendar.google.com/calendar/r?cid=paulsmith.github.io/eths-girls-swimming/calendar.ics" class="btn btn-google" target="_blank">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                 </svg>
                 Subscribe in Google Calendar
-            </button>
+            </a>
             <a href="calendar.ics" class="btn" download>
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -292,13 +292,6 @@
             </button>
         </div>
         
-        <div class="subscribe-note" id="subscribe-note" style="display: none;">
-            To subscribe to this calendar in Google Calendar:<br>
-            1. Copy this URL: <strong id="calendar-url"></strong><br>
-            2. In Google Calendar, click "+" next to "Other calendars"<br>
-            3. Select "From URL" and paste the calendar URL
-        </div>
-
         <div id="competitions-container">
             <div class="competitions-grid" id="competitions-list">
 
@@ -840,25 +833,7 @@
                     grid.appendChild(card.cloneNode(true));
                 });
             }
-        }
-
-        function subscribeToGoogleCalendar() {
-            // Get the current page URL and replace index.html with calendar.ics
-            const baseUrl = window.location.href.replace('index.html', '').replace(/\/$/, '');
-            const calendarUrl = baseUrl + '/calendar.ics';
-            
-            // Google Calendar subscribe URL format
-            const googleCalendarUrl = 'https://calendar.google.com/calendar/r?cid=' + encodeURIComponent(calendarUrl);
-            
-            // Try to open in new window
-            window.open(googleCalendarUrl, '_blank');
-            
-            // Also show instructions in case it doesn't work
-            document.getElementById('calendar-url').textContent = calendarUrl;
-            document.getElementById('subscribe-note').style.display = 'block';
-        }
-
-        // Display competition count
+        }// Display competition count
         console.log(`Loaded ${totalCompetitions} competitions`);
     </script>
 </body>
