@@ -38,7 +38,7 @@ The sync system automatically updates the swimming calendar from the official so
 ### Manual Sync (Local)
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 
 # Dry run (no changes)
 python sync_calendar.py --dry-run --verbose

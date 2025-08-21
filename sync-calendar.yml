@@ -27,8 +27,8 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install uv
+        uv pip install -r requirements.txt
         
     - name: Run calendar sync
       id: sync

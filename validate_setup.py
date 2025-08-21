@@ -202,7 +202,7 @@ def main():
         print("\n🎉 All validations passed! The sync system is ready to use.")
         print("\nNext steps:")
         print("1. Test with dry-run: python sync_calendar.py --dry-run --verbose")
-        print("2. Install dependencies: pip install -r requirements.txt")
+        print("2. Install dependencies: uv pip install -r requirements.txt")
         print("3. Set up automated workflow in GitHub Actions")
         return 0
     else:
