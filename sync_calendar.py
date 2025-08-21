@@ -362,20 +362,43 @@ class ETHSCalendarScraper:
         """Determine event type from text."""
         text_lower = text.lower()
         
-        if 'invitational' in text_lower or 'invite' in text_lower:
-            return 'Invitational'
-        elif 'relay' in text_lower:
-            return 'Relay Meet'
-        elif 'conference' in text_lower:
-            return 'Conference'
-        elif 'sectional' in text_lower:
-            return 'Championship'
-        elif 'state' in text_lower:
-            return 'Championship'
-        elif 'meeting' in text_lower:
+        # Meeting events (most specific first)
+        if 'meeting' in text_lower:
             return 'Meeting'
-        else:
-            return 'Dual Meet'
+        
+        # Championship events
+        if any(term in text_lower for term in ['sectional', 'state', 'ihsa']):
+            return 'Championship'
+        
+        # Conference events
+        if any(term in text_lower for term in ['conference', 'csl jv', 'csl ']):
+            return 'Conference'
+        
+        # Relay meets
+        if 'relay' in text_lower:
+            return 'Relay Meet'
+        
+        # Invitational meets
+        if any(term in text_lower for term in ['invitational', 'invite']):
+            return 'Invitational'
+        
+        # Special events
+        if any(term in text_lower for term in ['senior night', 'awards night', 'end of season']):
+            return 'Special Event'
+        
+        # Dual meets (common school names that indicate head-to-head competition)
+        dual_meet_indicators = [
+            'loyola', 'highland park', 'new trier', 'niles north', 'deerfield',
+            'gbs', 'gbn', 'maine south', 'glenbrook', 'libertyville'
+        ]
+        
+        if any(school in text_lower for school in dual_meet_indicators):
+            # Check if it's actually a dual meet and not part of a larger event
+            if not any(term in text_lower for term in ['jv2', 'jv3', 'diving']):
+                return 'Dual Meet'
+        
+        # Default to Dual Meet for unmatched events
+        return 'Dual Meet'
 
 
 def generate_html_calendar(events: List[Dict]) -> str:
@@ -450,7 +473,8 @@ def generate_event_card(event: Dict, index: int) -> str:
         'Championship': 'championship',
         'Meeting': 'meeting',
         'Special Event': 'special',
-    }.get(event.get('type', 'Dual Meet'), '')
+        'Dual Meet': 'dual-meet',
+    }.get(event.get('type', 'Dual Meet'), 'dual-meet')
     
     card_html = f'''
     <div class="competition-card">
