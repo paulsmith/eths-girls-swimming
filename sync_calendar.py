@@ -115,13 +115,20 @@ class ETHSCalendarScraper:
         """Parse the competitions page and extract basic event information."""
         events = []
         
-        # Look for common patterns in sports calendar websites
-        # This is a placeholder - actual implementation would depend on the site structure
-        event_rows = soup.find_all(['tr', 'div'], class_=re.compile(r'(event|competition|game|match)', re.I))
+        # Look for the competitions table
+        table = soup.find('table', class_='table')
+        if not table:
+            self.log("Could not find competitions table")
+            return events
         
-        if not event_rows:
-            # Try alternative selectors
-            event_rows = soup.find_all('tr')
+        # Find all rows in the tbody (skip header)
+        tbody = table.find('tbody')
+        if not tbody:
+            # If no tbody, look directly in table
+            tbody = table
+        
+        event_rows = tbody.find_all('tr')
+        self.log(f"Found {len(event_rows)} table rows")
         
         for row in event_rows:
             event_data = self._parse_event_row(row)
@@ -133,25 +140,34 @@ class ETHSCalendarScraper:
     def _parse_event_row(self, row) -> Optional[Dict]:
         """Parse a single event row to extract basic information."""
         try:
-            # Look for date patterns
-            date_text = self._extract_date(row.get_text())
-            if not date_text:
+            # Get all table cells
+            cells = row.find_all('td')
+            if len(cells) < 4:
+                # Not a valid event row (probably header or incomplete)
                 return None
             
-            # Look for info/details link
-            info_link = row.find('a', string=re.compile(r'info|details?', re.I))
-            if not info_link:
-                # Try looking for form elements
-                info_form = row.find('form')
-                if info_form:
-                    info_link = info_form
+            # Extract data from each column
+            date_text = cells[0].get_text(strip=True)
+            event_name = cells[1].get_text(strip=True)
+            location = cells[2].get_text(strip=True)
             
-            event_name = self._extract_event_name(row.get_text())
+            # Look for info form in the last cell
+            info_form = cells[3].find('form')
+            
+            # Skip if no valid date or event name
+            if not date_text or not event_name or len(event_name) < 2:
+                return None
+            
+            # Normalize the date format
+            normalized_date = self._extract_date(date_text)
+            if not normalized_date:
+                normalized_date = date_text  # Fallback to original
             
             return {
-                'date_text': date_text,
+                'date_text': normalized_date,
                 'name': event_name,
-                'info_element': info_link,
+                'location': location,
+                'info_element': info_form,
                 'row_html': str(row)
             }
         except Exception as e:
@@ -159,7 +175,32 @@ class ETHSCalendarScraper:
             return None
     
     def _extract_date(self, text: str) -> Optional[str]:
-        """Extract date from text using regex patterns."""
+        """Extract and normalize date from text using regex patterns."""
+        # Handle the specific format used on the website: "Wed, Aug 13"
+        short_date_pattern = r'\b(\w+),?\s+(\w+)\s+(\d{1,2})\b'
+        match = re.search(short_date_pattern, text)
+        if match:
+            day_name, month_abbr, day = match.groups()
+            # Convert to full date with current year (will be 2025 season)
+            year = 2025
+            
+            # Map month abbreviations to full names
+            month_map = {
+                'Jan': 'January', 'Feb': 'February', 'Mar': 'March',
+                'Apr': 'April', 'May': 'May', 'Jun': 'June',
+                'Jul': 'July', 'Aug': 'August', 'Sep': 'September',
+                'Oct': 'October', 'Nov': 'November', 'Dec': 'December'
+            }
+            
+            month_full = month_map.get(month_abbr, month_abbr)
+            
+            # Handle date ranges like "Nov 14 - Nov 15"
+            if '-' in text:
+                return f"{day_name}, {month_full} {day}, {year}"
+            else:
+                return f"{day_name}, {month_full} {day}, {year}"
+        
+        # Fallback patterns for other formats
         date_patterns = [
             r'\b(\w+day),?\s+(\w+)\s+(\d{1,2}),?\s+(\d{4})\b',  # "Friday, August 29, 2025"
             r'\b(\w+)\s+(\d{1,2}),?\s+(\d{4})\b',  # "August 29, 2025"
@@ -277,13 +318,19 @@ class ETHSCalendarScraper:
     
     def _create_basic_event(self, event_data: Dict) -> Dict:
         """Create a basic event structure."""
+        location = event_data.get('location', 'TBD')
+        event_name = event_data.get('name', 'Unknown Event')
+        
+        # Determine event type from name
+        event_type = self._extract_event_type(event_name)
+        
         return {
-            'name': event_data.get('name', 'Unknown Event'),
+            'name': event_name,
             'date': event_data.get('date_text', ''),
             'time': '5:00 PM',  # Default time
-            'location': 'TBD',
-            'type': 'Dual Meet',
-            'home': False,
+            'location': location,
+            'type': event_type,
+            'home': location == 'ETHS',
             'raw_data': event_data
         }
     
