@@ -20,6 +20,9 @@ from datetime import datetime, timedelta
 import json
 import argparse
 import sys
+import os
+import time
+import html
 from urllib.parse import urljoin, parse_qs, urlparse
 from icalendar import Calendar, Event
 import pytz
@@ -54,7 +57,7 @@ class ETHSCalendarScraper:
         try:
             # Step 1: Visit main page to establish session/cookies
             self.log("Visiting main page to establish session...")
-            main_response = self.session.get(f"{self.base_url}/main/EvanstonGirlsSwimming")
+            main_response = self.session.get(f"{self.base_url}/main/EvanstonGirlsSwimming", timeout=30)
             main_response.raise_for_status()
             
             # Step 2: Navigate to competitions page
@@ -69,7 +72,7 @@ class ETHSCalendarScraper:
             competitions_url = urljoin(self.base_url, competitions_link)
             self.log(f"Found competitions URL: {competitions_url}")
             
-            competitions_response = self.session.get(competitions_url)
+            competitions_response = self.session.get(competitions_url, timeout=30)
             competitions_response.raise_for_status()
             
             # Step 3: Parse competitions page and extract event list
@@ -84,6 +87,8 @@ class ETHSCalendarScraper:
                 detailed_event = self._get_event_details(event_data)
                 if detailed_event:
                     self.events.append(detailed_event)
+                # Add rate limiting between requests
+                time.sleep(1)
             
             self.log(f"Successfully scraped {len(self.events)} events")
             return self.events
@@ -218,9 +223,9 @@ class ETHSCalendarScraper:
             post_url = urljoin(self.base_url, form_action)
             
             if form_method == 'POST':
-                response = self.session.post(post_url, data=form_data)
+                response = self.session.post(post_url, data=form_data, timeout=30)
             else:
-                response = self.session.get(post_url, params=form_data)
+                response = self.session.get(post_url, params=form_data, timeout=30)
             
             response.raise_for_status()
             
@@ -238,7 +243,7 @@ class ETHSCalendarScraper:
             href = link_element.get('href', '')
             detail_url = urljoin(self.base_url, href)
             
-            response = self.session.get(detail_url)
+            response = self.session.get(detail_url, timeout=30)
             response.raise_for_status()
             
             detail_soup = BeautifulSoup(response.text, 'html.parser')
@@ -328,9 +333,11 @@ class ETHSCalendarScraper:
 
 def generate_html_calendar(events: List[Dict]) -> str:
     """Generate HTML calendar from events data."""
-    # Read existing HTML as template
+    # Read existing HTML as template using absolute path
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    html_path = os.path.join(script_dir, 'index.html')
     try:
-        with open('index.html', 'r', encoding='utf-8') as f:
+        with open(html_path, 'r', encoding='utf-8') as f:
             current_html = f.read()
     except FileNotFoundError:
         print("Error: index.html not found")
@@ -347,10 +354,12 @@ def generate_html_calendar(events: List[Dict]) -> str:
     # Clear existing events
     competitions_list.clear()
     
-    # Generate new event cards
+    # Generate new event cards with sanitized content
     for i, event in enumerate(events):
         card_html = generate_event_card(event, i)
-        competitions_list.append(BeautifulSoup(card_html, 'html.parser'))
+        # Parse with html.parser and sanitize
+        card_soup = BeautifulSoup(card_html, 'html.parser')
+        competitions_list.append(card_soup)
     
     # Update total count in JavaScript
     script_tag = soup.find('script')
@@ -368,20 +377,25 @@ def generate_html_calendar(events: List[Dict]) -> str:
 
 
 def generate_event_card(event: Dict, index: int) -> str:
-    """Generate HTML for a single event card."""
+    """Generate HTML for a single event card with sanitized content."""
     # Parse date
     try:
         date_obj = datetime.strptime(event['date'], '%A, %B %d, %Y')
         formatted_date = date_obj.strftime('%A, %B %d, %Y')
     except:
-        formatted_date = event['date']
+        formatted_date = html.escape(str(event['date']))
+    
+    # Sanitize all user content
+    event_name = html.escape(str(event.get('name', 'Unknown Event')))
+    event_time = html.escape(str(event.get('time', '5:00 PM')))
+    location = html.escape(str(event.get('location', 'TBD')))
+    event_type = html.escape(str(event.get('type', 'Dual Meet')))
     
     # Determine if home/away
-    location = event.get('location', 'TBD')
     is_home = location == 'ETHS' or 'ETHS' in location
     home_indicator = '<span class="home-indicator">(Home)</span>' if is_home else ''
     
-    # Map event type to CSS class
+    # Map event type to CSS class (safe since we're using predefined values)
     type_class = {
         'Invitational': 'invitational',
         'Relay Meet': 'relay',
@@ -399,9 +413,9 @@ def generate_event_card(event: Dict, index: int) -> str:
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
             </svg>
-            {event.get('time', '5:00 PM')}
+            {event_time}
         </div>
-        <h3 class="comp-name">{event['name']}</h3>
+        <h3 class="comp-name">{event_name}</h3>
         <div class="comp-location">
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
@@ -409,7 +423,7 @@ def generate_event_card(event: Dict, index: int) -> str:
             <span title="{location}">{location}</span>
             {home_indicator}
         </div>
-        <span class="comp-type {type_class}">{event.get('type', 'Dual Meet')}</span>
+        <span class="comp-type {type_class}">{event_type}</span>
     </div>
     '''
     
@@ -446,11 +460,16 @@ def generate_ics_calendar(events: List[Dict]) -> str:
                 except ValueError:
                     continue
             else:
-                # Fallback to current year if parsing fails
-                dt = datetime.now().replace(hour=17, minute=0, second=0, microsecond=0)
+                # Fallback to a reasonable default date (August 1st of current year)
+                current_year = datetime.now().year
+                dt = datetime(current_year, 8, 1, 17, 0, 0, 0)
             
-            # Localize to Central Time
-            dt_central = central.localize(dt)
+            # Localize to Central Time with DST handling
+            try:
+                dt_central = central.localize(dt)
+            except pytz.AmbiguousTimeError:
+                # Handle DST transitions by defaulting to standard time
+                dt_central = central.localize(dt, is_dst=False)
             
         except Exception as e:
             print(f"Error parsing date for event {i}: {e}")
@@ -523,11 +542,15 @@ def main():
             print(f"\nHTML preview (first 500 chars):\n{html_content[:500]}...")
             print(f"\nICS preview (first 500 chars):\n{ics_content[:500]}...")
         else:
-            # Write files
-            with open('index.html', 'w', encoding='utf-8') as f:
+            # Write files using absolute paths
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            html_path = os.path.join(script_dir, 'index.html')
+            ics_path = os.path.join(script_dir, 'calendar.ics')
+            
+            with open(html_path, 'w', encoding='utf-8') as f:
                 f.write(html_content)
             
-            with open('calendar.ics', 'w', encoding='utf-8') as f:
+            with open(ics_path, 'w', encoding='utf-8') as f:
                 f.write(ics_content)
             
             print("Calendar files updated successfully!")

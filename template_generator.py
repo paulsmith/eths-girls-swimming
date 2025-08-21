@@ -8,12 +8,15 @@ that can be populated with scraped data.
 
 from bs4 import BeautifulSoup
 import re
+import os
 
 
 def extract_template():
     """Extract HTML template from current index.html"""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    html_path = os.path.join(script_dir, 'index.html')
     try:
-        with open('index.html', 'r', encoding='utf-8') as f:
+        with open(html_path, 'r', encoding='utf-8') as f:
             html_content = f.read()
     except FileNotFoundError:
         print("Error: index.html not found")
@@ -121,12 +124,16 @@ def save_templates():
     # Create event card template
     card_template = create_event_card_template(sample_card)
     
-    # Save main template
-    with open('template.html', 'w', encoding='utf-8') as f:
+    # Save main template using absolute paths
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    template_path = os.path.join(script_dir, 'template.html')
+    card_template_path = os.path.join(script_dir, 'event_card_template.html')
+    
+    with open(template_path, 'w', encoding='utf-8') as f:
         f.write(html_template)
     
     # Save card template
-    with open('event_card_template.html', 'w', encoding='utf-8') as f:
+    with open(card_template_path, 'w', encoding='utf-8') as f:
         f.write(card_template)
     
     print("Templates saved:")
