@@ -135,7 +135,7 @@
             padding: 1.5rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
+            border: 3px solid #e5e7eb;
         }
 
         .competition-card:hover {
@@ -215,6 +215,10 @@
             color: #155e75;
         }
 
+        .competition-card:not(:has(.comp-type.special)):not(:has(.comp-type.meeting)) {
+            border-color: oklch(0.27 0.05 263.0);
+        }
+
         .timeline {
             position: relative;
             padding-left: 2rem;
@@ -265,25 +269,25 @@
             .competitions-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .header-content {
                 flex-direction: column;
                 gap: 1rem;
             }
-            
+
             .mascot-logo {
                 height: 60px;
             }
-            
+
             h1 {
                 font-size: 2rem;
             }
-            
+
             .calendar-actions {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
+
             .btn {
                 text-align: center;
                 justify-content: center;
@@ -325,40 +329,17 @@
                 Toggle View
             </button>
         </div>
-        
+
         <div id="competitions-container">
             <div class="competitions-grid" id="competitions-list">
-
                 
                 <div class="competition-card">
-                    <div class="comp-date">Date</div>
-                    
+                    <div class="comp-date">Wednesday, August 13, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                         </svg>
-                        TBD
-                    </div>
-                    <h3 class="comp-name">Meet/Event</h3>
-                    <div class="comp-location">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span title="Location">Location</span>
-                        
-                    </div>
-                    <span class="comp-type ">Meet</span>
-                    
-                </div>
-                
-                <div class="competition-card">
-                    <div class="comp-date">Wednesday, August 13, 2024</div>
-                    
-                    <div class="comp-time">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                        </svg>
-                        5:30-6:00 PM CT
+                        5:30 PM CT
                     </div>
                     <h3 class="comp-name">Swimmer &amp; Diver &amp; Parent Meeting</h3>
                     <div class="comp-location">
@@ -368,18 +349,17 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type ">meeting</span>
+                    <div class="comp-type meeting">meeting</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Thursday, August 21, 2024</div>
-                    
+                    <div class="comp-date">Thursday, August 21, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                         </svg>
-                        6:15 PM - 7:45 PM
+                        6:15 PM CT
                     </div>
                     <h3 class="comp-name">All Sports Athletes &amp; Parent Meeting</h3>
                     <div class="comp-location">
@@ -389,13 +369,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type ">meeting</span>
+                    <div class="comp-type meeting">meeting</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, August 29, 2024</div>
-                    
+                    <div class="comp-date">Friday, August 29, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -407,16 +386,15 @@
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span title="1100 Laramie Ave, Wilmette, IL 60091">Loyola Academy</span>
+                        <span title="Loyola Academy, 1100 Laramie Ave, Wilmette, IL 60091">Loyola Academy</span>
                         
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, August 30, 2024</div>
-                    
+                    <div class="comp-date">Saturday, August 30, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -431,13 +409,12 @@
                         <span title="1285 N McKinley Rd, Lake Forest, IL 60045">Lake Forest High School</span>
                         
                     </div>
-                    <span class="comp-type ">relay</span>
+                    <div class="comp-type relay">relay</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, September 12, 2024</div>
-                    
+                    <div class="comp-date">Friday, September 12, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -452,13 +429,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, September 19, 2024</div>
-                    
+                    <div class="comp-date">Friday, September 19, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -473,13 +449,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, September 20, 2024</div>
-                    
+                    <div class="comp-date">Saturday, September 20, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -494,18 +469,17 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, September 20, 2024</div>
-                    
+                    <div class="comp-date">Saturday, September 20, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                         </svg>
-                        Diving 9:00 AM, Swimming 11:00 AM CT
+                        11:00 AM CT
                     </div>
                     <h3 class="comp-name">New Trier JV2 JV3 &amp; Diving</h3>
                     <div class="comp-location">
@@ -515,13 +489,12 @@
                         <span title="New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093">New Trier High School</span>
                         
                     </div>
-                    <span class="comp-type "></span>
-                    <div class="levels">JV2, JV3</div>
+                    <div class="comp-type meet">meet</div>
+                    <div class="levels">JV2, JV3, Diving</div>
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, September 26, 2024</div>
-                    
+                    <div class="comp-date">Friday, September 26, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -536,13 +509,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, September 27, 2024</div>
-                    
+                    <div class="comp-date">Saturday, September 27, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -557,13 +529,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type ">invitational</span>
+                    <div class="comp-type invitational">invitational</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, October 3, 2024</div>
-                    
+                    <div class="comp-date">Friday, October 3, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -575,16 +546,15 @@
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span title="Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026">Glenbrook South HS</span>
+                        <span title="Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026">Glenbrook South High School</span>
                         
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, October 10, 2024</div>
-                    
+                    <div class="comp-date">Friday, October 10, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -599,13 +569,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, October 10, 2024</div>
-                    
+                    <div class="comp-date">Friday, October 10, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -620,13 +589,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type ">special</span>
+                    <div class="comp-type special">special</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, October 11, 2024</div>
-                    
+                    <div class="comp-date">Saturday, October 11, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -641,34 +609,12 @@
                         <span title="New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093">New Trier High School</span>
                         
                     </div>
-                    <span class="comp-type ">relay</span>
+                    <div class="comp-type relay">relay</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, October 18, 2024</div>
-                    
-                    <div class="comp-time">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                        </svg>
-                        12:00 PM CT
-                    </div>
-                    <h3 class="comp-name">Deerfield Invite</h3>
-                    <div class="comp-location">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span title="1959 Waukegan Rd, Deerfield, IL 60015">Deerfield High School</span>
-                        
-                    </div>
-                    <span class="comp-type ">invitational</span>
-                    
-                </div>
-                
-                <div class="competition-card">
-                    <div class="comp-date">Saturday, October 18, 2024</div>
-                    
+                    <div class="comp-date">Saturday, October 18, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -683,13 +629,32 @@
                         <span title="708 W Park Ave, Libertyville, IL 60048">Libertyville High School</span>
                         
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     <div class="levels">JV</div>
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, October 24, 2024</div>
+                    <div class="comp-date">Saturday, October 18, 2025</div>
+                    <div class="comp-time">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                        12:00 PM CT
+                    </div>
+                    <h3 class="comp-name">Deerfield Invite</h3>
+                    <div class="comp-location">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span title="1959 Waukegan Rd, Deerfield, IL 60015">Deerfield High School</span>
+                        
+                    </div>
+                    <div class="comp-type invitational">invitational</div>
                     
+                </div>
+                
+                <div class="competition-card">
+                    <div class="comp-date">Friday, October 24, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -704,13 +669,12 @@
                         <span title="1111 S Dee Rd, Park Ridge, IL 60068">Maine South High School</span>
                         
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, October 25, 2024</div>
-                    
+                    <div class="comp-date">Saturday, October 25, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -725,13 +689,12 @@
                         <span title="New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093">New Trier High School</span>
                         
                     </div>
-                    <span class="comp-type ">conference</span>
+                    <div class="comp-type conference">conference</div>
                     <div class="levels">Freshmen</div>
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, October 31, 2024</div>
-                    
+                    <div class="comp-date">Friday, October 31, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -746,34 +709,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type ">invitational</span>
+                    <div class="comp-type invitational">invitational</div>
                     <div class="levels">JV</div>
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, November 1, 2024</div>
-                    
-                    <div class="comp-time">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                        </svg>
-                        10:00 AM CT
-                    </div>
-                    <h3 class="comp-name">CSL JV and Varsity Diving</h3>
-                    <div class="comp-location">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span title="Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015">Deerfield High School</span>
-                        
-                    </div>
-                    <span class="comp-type "></span>
-                    <div class="levels">JV and Varsity</div>
-                </div>
-                
-                <div class="competition-card">
-                    <div class="comp-date">Saturday, November 1, 2024</div>
-                    
+                    <div class="comp-date">Saturday, November 1, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -788,13 +729,32 @@
                         <span title="2300 Shermer Rd, Northbrook, IL 60062">Glenbrook North High School</span>
                         
                     </div>
-                    <span class="comp-type "></span>
+                    <div class="comp-type meet">meet</div>
                     <div class="levels">JV and Varsity</div>
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Tuesday, November 4, 2024</div>
-                    
+                    <div class="comp-date">Saturday, November 1, 2025</div>
+                    <div class="comp-time">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                        10:00 AM CT
+                    </div>
+                    <h3 class="comp-name">CSL JV and Varsity Diving</h3>
+                    <div class="comp-location">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span title="Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015">Deerfield High School</span>
+                        
+                    </div>
+                    <div class="comp-type meet">meet</div>
+                    <div class="levels">JV and Varsity</div>
+                </div>
+                
+                <div class="competition-card">
+                    <div class="comp-date">Tuesday, November 4, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -809,13 +769,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type ">meeting</span>
+                    <div class="comp-type meeting">meeting</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Saturday, November 8, 2024</div>
-                    
+                    <div class="comp-date">Saturday, November 8, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -830,13 +789,12 @@
                         <span title="4000 W. Lake Ave., Glenview, IL 60026">Glenbrook South High School</span>
                         
                     </div>
-                    <span class="comp-type ">championship</span>
+                    <div class="comp-type championship">championship</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Monday, November 10, 2024</div>
-                    
+                    <div class="comp-date">Monday, November 10, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -851,13 +809,12 @@
                         <span title="">ETHS</span>
                         <span class="home-indicator">(Home)</span>
                     </div>
-                    <span class="comp-type ">special</span>
+                    <div class="comp-type special">special</div>
                     
                 </div>
                 
                 <div class="competition-card">
-                    <div class="comp-date">Friday, November 14, 2024</div>
-                    
+                    <div class="comp-date">Friday, November 14, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
@@ -872,29 +829,28 @@
                         <span title="FMC Natatorium 275 Plaza Dr, Westmont, IL 60559">FMC Natatorium</span>
                         
                     </div>
-                    <span class="comp-type ">championship</span>
+                    <div class="comp-type championship">championship</div>
                     
                 </div>
                 
-
             </div>
         </div>
     </div>
 
     <script>
         let currentView = 'grid';
-        const totalCompetitions =  26 ;
+        const totalCompetitions =  25 ;
 
         function toggleView() {
             const container = document.getElementById('competitions-container');
             const cards = document.querySelectorAll('.competition-card');
-            
+
             if (currentView === 'grid') {
                 
                 currentView = 'timeline';
                 container.innerHTML = '<div class="timeline" id="timeline-list"></div>';
                 const timeline = document.getElementById('timeline-list');
-                
+
                 cards.forEach(card => {
                     const timelineItem = document.createElement('div');
                     timelineItem.className = 'timeline-item';
@@ -906,7 +862,7 @@
                 currentView = 'grid';
                 container.innerHTML = '<div class="competitions-grid" id="competitions-list"></div>';
                 const grid = document.getElementById('competitions-list');
-                
+
                 cards.forEach(card => {
                     grid.appendChild(card.cloneNode(true));
                 });

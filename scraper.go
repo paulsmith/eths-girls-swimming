@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"html/template"
 	"io"
@@ -14,6 +15,7 @@ import (
 	"net/http/cookiejar"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -22,16 +24,34 @@ import (
 )
 
 const (
-	baseURL          = "https://wildkitaquatics.com/main/EvanstonGirlsSwimming"
-	userAgent        = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
-	competitionsPath = "/competitions" // Adjust based on actual path
+	baseURL       = "https://wildkitaquatics.com/main/EvanstonGirlsSwimming"
+	userAgent     = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+	currentSeason = "2025-2026"
+	currentYear   = "2025"
+
+	// File paths for intermediate data
+	rawDataFile       = "scraped_data.json"
+	processedDataFile = "processed_events.json"
 )
+
+// Pipeline controls execution phases
+type Pipeline struct {
+	StartFromPhase string
+	StopAtPhase    string
+}
+
+// Config holds CLI configuration
+type Config struct {
+	Pipeline Pipeline
+	Verbose  bool
+}
 
 type Scraper struct {
 	client *http.Client
+	config Config
 }
 
-func NewScraper() *Scraper {
+func NewScraper(config Config) *Scraper {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		log.Fatalf("Failed to create cookie jar: %v", err)
@@ -42,7 +62,69 @@ func NewScraper() *Scraper {
 		Timeout: 30 * time.Second,
 	}
 
-	return &Scraper{client: client}
+	return &Scraper{client: client, config: config}
+}
+
+// saveRawData saves scraped competition data to JSON file
+func (s *Scraper) saveRawData(competitions []CompetitionInfo) error {
+	data, err := json.MarshalIndent(competitions, "", "  ")
+	if err != nil {
+		return fmt.Errorf("marshaling raw data: %w", err)
+	}
+
+	if err := os.WriteFile(rawDataFile, data, 0644); err != nil {
+		return fmt.Errorf("writing raw data file: %w", err)
+	}
+
+	log.Printf("Saved raw data to %s (%d competitions)", rawDataFile, len(competitions))
+	return nil
+}
+
+// loadRawData loads scraped competition data from JSON file
+func (s *Scraper) loadRawData() ([]CompetitionInfo, error) {
+	data, err := os.ReadFile(rawDataFile)
+	if err != nil {
+		return nil, fmt.Errorf("reading raw data file: %w", err)
+	}
+
+	var competitions []CompetitionInfo
+	if err := json.Unmarshal(data, &competitions); err != nil {
+		return nil, fmt.Errorf("unmarshaling raw data: %w", err)
+	}
+
+	log.Printf("Loaded raw data from %s (%d competitions)", rawDataFile, len(competitions))
+	return competitions, nil
+}
+
+// saveProcessedData saves processed events to JSON file
+func (s *Scraper) saveProcessedData(events []Event) error {
+	data, err := json.MarshalIndent(events, "", "  ")
+	if err != nil {
+		return fmt.Errorf("marshaling processed data: %w", err)
+	}
+
+	if err := os.WriteFile(processedDataFile, data, 0644); err != nil {
+		return fmt.Errorf("writing processed data file: %w", err)
+	}
+
+	log.Printf("Saved processed data to %s (%d events)", processedDataFile, len(events))
+	return nil
+}
+
+// loadProcessedData loads processed events from JSON file
+func (s *Scraper) loadProcessedData() ([]Event, error) {
+	data, err := os.ReadFile(processedDataFile)
+	if err != nil {
+		return nil, fmt.Errorf("reading processed data file: %w", err)
+	}
+
+	var events []Event
+	if err := json.Unmarshal(data, &events); err != nil {
+		return nil, fmt.Errorf("unmarshaling processed data: %w", err)
+	}
+
+	log.Printf("Loaded processed data from %s (%d events)", processedDataFile, len(events))
+	return events, nil
 }
 
 func (s *Scraper) request(method, url string, body io.Reader) (*http.Response, error) {
@@ -215,7 +297,7 @@ func (s *Scraper) extractCompetitionFromRow(row *html.Node) CompetitionInfo {
 	var extractCellsAndForms func(*html.Node)
 
 	extractCellsAndForms = func(n *html.Node) {
-		if n.Type == html.ElementNode && (n.Data == "td" || n.Data == "th") {
+		if n.Type == html.ElementNode && (n.Data == "td") {
 			text := s.extractText(n)
 			cells = append(cells, strings.TrimSpace(text))
 
@@ -425,7 +507,7 @@ func (s *Scraper) processWithLLM(ctx context.Context, comp CompetitionInfo) (*Ev
 	prompt := s.createPrompt(comp)
 
 	// Call LLM API
-	response, err := s.callLLM(ctx, prompt)
+	response, err := s.callLLM(ctx, prompt, "{")
 	if err != nil {
 		log.Printf("LLM call failed for %s, using fallback: %v", comp.RawName, err)
 		return s.createFallbackEvent(comp), nil
@@ -433,7 +515,7 @@ func (s *Scraper) processWithLLM(ctx context.Context, comp CompetitionInfo) (*Ev
 
 	// Parse JSON response
 	var event Event
-	if err := json.Unmarshal([]byte(response), &event); err != nil {
+	if err := json.Unmarshal([]byte("{"+response), &event); err != nil {
 		log.Printf("JSON parsing failed for %s, using fallback: %v", comp.RawName, err)
 		return s.createFallbackEvent(comp), nil
 	}
@@ -478,8 +560,8 @@ Instructions:
    }
 
 2. Follow these specific guidelines for each field:
-   - date: Format as "Day, Month Date, Year" (e.g., "Saturday, August 23, 2025"). Assume the next occurrence of the date if year is not provided.
-   - time: Extract from details if available, otherwise use "TBD". Format as "HH:MM AM/PM CT".
+   - date: Format as "Day, Month Date, Year" (e.g., "Saturday, August 23, 2025"). Assume the next occurrence of the date if year is not provided. This is for the %s season. The year is currently %s.
+   - time: Extract from details if available, otherwise use "TBD". Format as "HH:MM AM/PM CT". This is the start time of a meet or event.
    - name: Use the provided raw name.
    - location: Extract a short location name from the raw location.
    - location_full: Use the full address if available.
@@ -491,21 +573,25 @@ Instructions:
      * "conference" for conference meets
      * "championship" for sectionals/state
      * "special" for special events like senior night
-     * "" (empty string) for regular dual meets
+     * "meet" for regular dual meets
    - levels: Extract level information (e.g., JV, Varsity) if mentioned, otherwise leave as an empty string.
    - details: Include any additional important information, such as bus departure times.
 
-3. Your final output must be valid JSON only, without any additional text or explanation.`, comp.RawDate, comp.RawName, comp.RawLocation, comp.Details)
+3. Your final output must be valid JSON only, without any additional text or explanation.`, comp.RawDate, comp.RawName, comp.RawLocation, comp.Details, currentSeason, currentYear)
 }
 
-func (s *Scraper) callLLM(ctx context.Context, prompt string) (string, error) {
+func (s *Scraper) callLLM(ctx context.Context, prompt string, assistantPrefill string) (string, error) {
 	client := anthropic.NewClient()
+	messages := []anthropic.MessageParam{
+		anthropic.NewUserMessage(anthropic.NewTextBlock(prompt)),
+	}
+	if assistantPrefill != "" {
+		messages = append(messages, anthropic.NewAssistantMessage(anthropic.NewTextBlock(assistantPrefill)))
+	}
 	message, err := client.Messages.New(ctx, anthropic.MessageNewParams{
 		MaxTokens: 2048,
-		Messages: []anthropic.MessageParam{
-			anthropic.NewUserMessage(anthropic.NewTextBlock(prompt)),
-		},
-		Model: anthropic.ModelClaude3_5HaikuLatest,
+		Messages:  messages,
+		Model:     anthropic.ModelClaude3_5HaikuLatest,
 	})
 	if err != nil {
 		return "", fmt.Errorf("calling Anthropic API: %w", err)
@@ -531,36 +617,8 @@ func (s *Scraper) createFallbackEvent(comp CompetitionInfo) *Event {
 		LocationFull: comp.RawLocation,
 		IsHome:       strings.Contains(strings.ToLower(comp.RawLocation), "eths") || strings.Contains(strings.ToLower(comp.RawLocation), "evanston"),
 		Type:         "Meet",
-		TypeClass:    "",
 		Levels:       "",
 	}
-}
-
-func (s *Scraper) formatDate(rawDate string) string {
-	// Simple date formatting - in production would use proper date parsing
-	if strings.Contains(rawDate, ",") {
-		return rawDate // Already formatted
-	}
-	return rawDate // Return as-is for now
-}
-
-func (s *Scraper) extractShortLocation(location string) string {
-	if strings.Contains(strings.ToLower(location), "eths") {
-		return "ETHS"
-	}
-
-	// Extract school name before comma or address
-	parts := strings.Split(location, ",")
-	if len(parts) > 0 {
-		return strings.TrimSpace(parts[0])
-	}
-
-	return location
-}
-
-func (s *Scraper) isHome(location string) bool {
-	lower := strings.ToLower(location)
-	return strings.Contains(lower, "eths") || strings.Contains(lower, "evanston")
 }
 
 func (s *Scraper) classifyEventType(name string) string {
@@ -586,57 +644,6 @@ func (s *Scraper) classifyEventType(name string) string {
 	}
 
 	return "Dual Meet"
-}
-
-func (s *Scraper) getTypeClass(name string) string {
-	eventType := s.classifyEventType(name)
-
-	switch eventType {
-	case "Meeting":
-		return "meeting"
-	case "Invitational":
-		return "invitational"
-	case "Relay Meet":
-		return "relay"
-	case "Conference":
-		return "conference"
-	case "Championship":
-		return "championship"
-	case "Special Event":
-		return "special"
-	default:
-		return ""
-	}
-}
-
-func (s *Scraper) extractLevels(name string) string {
-	lower := strings.ToLower(name)
-
-	var levels []string
-	if strings.Contains(lower, "jv") {
-		levels = append(levels, "JV")
-	}
-	if strings.Contains(lower, "varsity") {
-		levels = append(levels, "Varsity")
-	}
-	if strings.Contains(lower, "frosh") {
-		levels = append(levels, "Freshman")
-	}
-	if strings.Contains(lower, "diving") {
-		levels = append(levels, "Diving")
-	}
-	if strings.Contains(lower, "jv2") {
-		levels = append(levels, "JV2")
-	}
-	if strings.Contains(lower, "jv3") {
-		levels = append(levels, "JV3")
-	}
-
-	if len(levels) > 0 {
-		return strings.Join(levels, ", ")
-	}
-
-	return ""
 }
 
 func (s *Scraper) generateHTML(ctx context.Context, events []Event) error {
@@ -665,36 +672,189 @@ func (s *Scraper) generateHTML(ctx context.Context, events []Event) error {
 }
 
 func (s *Scraper) Run(ctx context.Context) error {
-	log.Printf("Starting scraper...")
+	log.Printf("Starting scraper pipeline (from: %s, to: %s)",
+		s.config.Pipeline.StartFromPhase, s.config.Pipeline.StopAtPhase)
 
-	if err := s.establishSession(ctx); err != nil {
-		return fmt.Errorf("failed to establish session: %w", err)
-	}
-
-	competitions, err := s.scrapeCompetitionsPage(ctx)
-	if err != nil {
-		return fmt.Errorf("failed to scrape competitions: %w", err)
-	}
-
+	var competitions []CompetitionInfo
 	var events []Event
-	for _, comp := range competitions {
-		event, err := s.processWithLLM(ctx, comp)
-		if err != nil {
-			log.Printf("Failed to process competition %s: %v", comp.RawName, err)
-			continue
+	var err error
+
+	// Phase 1: Scrape raw data
+	if s.shouldRunPhase("scrape") {
+		log.Printf("=== Phase 1: Scraping competition data ===")
+		if err := s.establishSession(ctx); err != nil {
+			return fmt.Errorf("failed to establish session: %w", err)
 		}
-		events = append(events, *event)
+
+		competitions, err = s.scrapeCompetitionsPage(ctx)
+		if err != nil {
+			return fmt.Errorf("failed to scrape competitions: %w", err)
+		}
+
+		if err := s.saveRawData(competitions); err != nil {
+			return fmt.Errorf("failed to save raw data: %w", err)
+		}
+
+		if s.config.Pipeline.StopAtPhase == "scrape" {
+			log.Printf("Stopping after scrape phase as requested")
+			return nil
+		}
 	}
 
-	if len(events) == 0 {
-		return fmt.Errorf("no events found")
+	// Phase 2: Process with LLM
+	if s.shouldRunPhase("process") {
+		log.Printf("=== Phase 2: Processing with LLM ===")
+		if competitions == nil {
+			competitions, err = s.loadRawData()
+			if err != nil {
+				return fmt.Errorf("failed to load raw data: %w", err)
+			}
+		}
+
+		for i, comp := range competitions {
+			if s.config.Verbose {
+				log.Printf("Processing %d/%d: %s", i+1, len(competitions), comp.RawName)
+			}
+			event, err := s.processWithLLM(ctx, comp)
+			if err != nil {
+				log.Printf("Failed to process competition %s: %v", comp.RawName, err)
+				continue
+			}
+			events = append(events, *event)
+		}
+
+		if len(events) == 0 {
+			return fmt.Errorf("no events processed successfully")
+		}
+
+		if err := s.saveProcessedData(events); err != nil {
+			return fmt.Errorf("failed to save processed data: %w", err)
+		}
+
+		if s.config.Pipeline.StopAtPhase == "process" {
+			log.Printf("Stopping after process phase as requested")
+			return nil
+		}
 	}
 
-	return s.generateHTML(ctx, events)
+	// Phase 3: Generate HTML
+	if s.shouldRunPhase("html") {
+		log.Printf("=== Phase 3: Generating HTML ===")
+		if events == nil {
+			events, err = s.loadProcessedData()
+			if err != nil {
+				return fmt.Errorf("failed to load processed data: %w", err)
+			}
+		}
+
+		return s.generateHTML(ctx, events)
+	}
+
+	log.Printf("Pipeline completed successfully")
+	return nil
+}
+
+// shouldRunPhase determines if a phase should be executed based on configuration
+func (s *Scraper) shouldRunPhase(phase string) bool {
+	phases := []string{"scrape", "process", "html"}
+
+	startIdx := 0
+	endIdx := len(phases) - 1
+
+	// Find start index
+	if s.config.Pipeline.StartFromPhase != "" {
+		for i, p := range phases {
+			if p == s.config.Pipeline.StartFromPhase {
+				startIdx = i
+				break
+			}
+		}
+	}
+
+	// Find end index
+	if s.config.Pipeline.StopAtPhase != "" {
+		for i, p := range phases {
+			if p == s.config.Pipeline.StopAtPhase {
+				endIdx = i
+				break
+			}
+		}
+	}
+
+	// Find current phase index
+	currentIdx := -1
+	for i, p := range phases {
+		if p == phase {
+			currentIdx = i
+			break
+		}
+	}
+
+	return currentIdx >= startIdx && currentIdx <= endIdx
 }
 
 func main() {
-	scraper := NewScraper()
+	var (
+		startFrom = flag.String("from", "", "Start from phase: scrape, process, html")
+		stopAt    = flag.String("to", "", "Stop at phase: scrape, process, html")
+		verbose   = flag.Bool("v", false, "Verbose logging")
+		help      = flag.Bool("h", false, "Show help")
+	)
+
+	flag.Usage = func() {
+		prog := filepath.Base(os.Args[0])
+		fmt.Fprintf(os.Stderr, `ETHS Girls Swimming Calendar Scraper
+
+Usage: %s [OPTIONS]
+
+Pipeline Phases:
+  scrape   - Scrape competition data from wildkitaquatics.com
+  process  - Process scraped data with LLM (requires ANTHROPIC_API_KEY)
+  html     - Generate HTML calendar from processed data
+
+Options:
+`, prog)
+		flag.PrintDefaults()
+		fmt.Fprintf(os.Stderr, `
+Examples:
+  %s                          # Run full pipeline (scrape -> process -> html)
+  %s -from scrape -to scrape  # Only scrape data, save to scraped_data.json
+  %s -from process            # Skip scraping, process existing data
+  %s -from html               # Only generate HTML from processed_events.json
+  %s -v                       # Run with verbose logging
+
+Files:
+  scraped_data.json      # Raw scraped competition data
+  processed_events.json  # LLM-processed event data  
+  index.html             # Generated calendar HTML
+`, prog, prog, prog, prog, prog)
+	}
+
+	flag.Parse()
+
+	if *help {
+		flag.Usage()
+		os.Exit(0)
+	}
+
+	config := Config{
+		Pipeline: Pipeline{
+			StartFromPhase: *startFrom,
+			StopAtPhase:    *stopAt,
+		},
+		Verbose: *verbose,
+	}
+
+	// Validate phase names
+	validPhases := map[string]bool{"scrape": true, "process": true, "html": true}
+	if config.Pipeline.StartFromPhase != "" && !validPhases[config.Pipeline.StartFromPhase] {
+		log.Fatalf("Invalid start phase: %s (must be: scrape, process, html)", config.Pipeline.StartFromPhase)
+	}
+	if config.Pipeline.StopAtPhase != "" && !validPhases[config.Pipeline.StopAtPhase] {
+		log.Fatalf("Invalid stop phase: %s (must be: scrape, process, html)", config.Pipeline.StopAtPhase)
+	}
+
+	scraper := NewScraper(config)
 	if err := scraper.Run(context.Background()); err != nil {
 		log.Fatalf("Scraper failed: %v", err)
 	}

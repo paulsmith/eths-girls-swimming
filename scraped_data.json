@@ -1,0 +1,258 @@
+[
+  {
+    "RawDate": "Wed, Aug 13",
+    "RawName": "Swimmer \u0026 Diver \u0026 Parent Meeting",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Swimmers and Divers and Parent Meeting :": "Swim and Dive Parent Meeting 5:30-6 pm at the pool."
+    }
+  },
+  {
+    "RawDate": "Thu, Aug 21",
+    "RawName": "All Sports Athletes \u0026 Parent Meeting",
+    "RawLocation": "ETHS",
+    "Details": {
+      "All Sports Athlete and Parent Meeting :": "Parent Meeting for All Sports 6:15-7:45 pm in the Auditorium",
+      "Location :": "ETHS"
+    }
+  },
+  {
+    "RawDate": "Fri, Aug 29",
+    "RawName": "Loyola",
+    "RawLocation": "Loyola Academy, 1100 Laramie Ave, Wilmette, IL 60091",
+    "Details": {
+      "Bus :": "3:45 pm",
+      "Location :": "Loyola Academy, 1100 Laramie Ave, Wilmette, IL 60091",
+      "Start :": "5 pm"
+    }
+  },
+  {
+    "RawDate": "Sat, Aug 30",
+    "RawName": "Lake Forest Relays",
+    "RawLocation": "Lake Forest High School, 1285 N McKinley Rd, Lake Forest, IL 60045",
+    "Details": {
+      "Bus :": "Dive: 6:15 AM\nSwim: 10:30 AM",
+      "Location :": "Lake Forest High School, 1285 N McKinley Rd, Lake Forest, IL 60045",
+      "Start :": "Dive: 8:30 AM\nSwim: 1 PM"
+    }
+  },
+  {
+    "RawDate": "Fri, Sep 12",
+    "RawName": "Niles North",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Start :": "5:30 pm",
+      "Warmup :": "3:45 pm"
+    }
+  },
+  {
+    "RawDate": "Fri, Sep 19",
+    "RawName": "Highland Park",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Start :": "5:30 PM",
+      "Warmup :": "3:45 PM"
+    }
+  },
+  {
+    "RawDate": "Sat, Sep 20",
+    "RawName": "New Trier",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Start :": "11 am",
+      "Warmup :": "9:30 AM"
+    }
+  },
+  {
+    "RawDate": "Sat, Sep 20",
+    "RawName": "New Trier JV2 JV3 \u0026 Diving",
+    "RawLocation": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
+    "Details": {
+      "Bus :": "Diving 7:30 AM Swimming 9:30 AM",
+      "Location :": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
+      "Start :": "Diving 9:00 AM Swimming 11 AM"
+    }
+  },
+  {
+    "RawDate": "Fri, Sep 26",
+    "RawName": "Deerfield",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Start :": "5:30 pm",
+      "Warmup :": "3:45 PM"
+    }
+  },
+  {
+    "RawDate": "Sat, Sep 27",
+    "RawName": "Evanston Invite",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Meet Starts :": "1:00 pm",
+      "Note :": "All swimmers are expected to be at meet. If you are not entered in meet you may arrive at 12:30 pm.",
+      "Warmup :": "11:30 am"
+    }
+  },
+  {
+    "RawDate": "Fri, Oct 03",
+    "RawName": "GBS",
+    "RawLocation": "Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026",
+    "Details": {
+      "Bus :": "3:45 PM",
+      "Location :": "Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026",
+      "Start :": "5:30 pm"
+    }
+  },
+  {
+    "RawDate": "Fri, Oct 10",
+    "RawName": "GBN",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Start :": "5:30 PM",
+      "Warmup :": "3:45 PM"
+    }
+  },
+  {
+    "RawDate": "Fri, Oct 10",
+    "RawName": "Senior Night",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Start :": "About 6:15 pm"
+    }
+  },
+  {
+    "RawDate": "Sat, Oct 11",
+    "RawName": "New Trier Relays",
+    "RawLocation": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
+    "Details": {
+      "Bus :": "8:45 am",
+      "Location :": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
+      "Meet Information :": "Meet Information",
+      "Start :": "11 am"
+    }
+  },
+  {
+    "RawDate": "Sat, Oct 18",
+    "RawName": "Libertyville JV",
+    "RawLocation": "Libertyville High School, 708 W Park Ave, Libertyville, IL 60048",
+    "Details": {
+      "Bus :": "7 am",
+      "Location :": "Libertyville High School, 708 W Park Ave, Libertyville, IL 60048",
+      "Meet Info :": "Meet Info",
+      "Start :": "9 am"
+    }
+  },
+  {
+    "RawDate": "Sat, Oct 18",
+    "RawName": "Deerfield Invite",
+    "RawLocation": "Deerfield High School,\n1959 Waukegan Rd, Deerfield, IL 60015",
+    "Details": {
+      "Bus :": "9:45 AM",
+      "Location :": "Deerfield High School,\n1959 Waukegan Rd, Deerfield, IL 60015",
+      "Start :": "Noon"
+    }
+  },
+  {
+    "RawDate": "Fri, Oct 24",
+    "RawName": "Maine South",
+    "RawLocation": "Maine South High School, 1111 S Dee Rd, Park Ridge, IL 60068",
+    "Details": {
+      "Bus :": "3:45 PM",
+      "Location :": "Maine South High School, 1111 S Dee Rd, Park Ridge, IL 60068",
+      "Start :": "5:30 pm"
+    }
+  },
+  {
+    "RawDate": "Sat, Oct 25",
+    "RawName": "Frosh Conference",
+    "RawLocation": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
+    "Details": {
+      "Bus :": "10:00 am",
+      "Location :": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
+      "Note :": "This meet is all the Freshmen from the whole 12 team Central Suburban League Conference",
+      "Start :": "Noon"
+    }
+  },
+  {
+    "RawDate": "Fri, Oct 31",
+    "RawName": "CSL JV Invite",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Note :": "This meet is for all the swimmers not competing in JV or Varsity Conference",
+      "Start :": "5 pm",
+      "Warmup :": "3:45 pm"
+    }
+  },
+  {
+    "RawDate": "Sat, Nov 01",
+    "RawName": "CSL JV and Varsity",
+    "RawLocation": "Glenbrook North High School, 2300 Shermer Rd, Northbrook, IL 60062",
+    "Details": {
+      "Bus :": "8:15 am",
+      "Event Order :": "Regular high school event order with breaks after the 50 Free and 200 Free Relay. JV heats first followed by Varsity heats. 2 heats of relays and 3 heats of individual swimmers.",
+      "Location :": "Glenbrook North High School, 2300 Shermer Rd, Northbrook, IL 60062",
+      "Qualification :": "The top 3 swimmers in each event from each team and the top 3 divers compete at the Varsity level. Approximately 15 swimmers.\nThe next 3 swimmers in each event from each team and the next 3 divers compete at the JV level. Approximately another 15 swimmers for a total of about 30 swimmers from each team competing.",
+      "Spectators :": "Are allowed. Admission $5.",
+      "Swimming Start :": "11 am"
+    }
+  },
+  {
+    "RawDate": "Sat, Nov 01",
+    "RawName": "CSL JV and Varsity Diving",
+    "RawLocation": "Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015",
+    "Details": {
+      "Bus :": "7 am",
+      "Diving Start :": "10 am",
+      "Location :": "Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015",
+      "Qualification :": "The top 3 swimmers in each event from each team and the top 3 divers compete at the Varsity level. Approximately 15 swimmers.\nThe next 3 swimmers in each event from each team and the next 3 divers compete at the JV level. Approximately another 15 swimmers for a total of about 30 swimmers from each team competing."
+    }
+  },
+  {
+    "RawDate": "Tue, Nov 04",
+    "RawName": "End of Season Meeting",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Info :": "Turn in any equipment, get info about upcoming events, learn about next season and vote for captains",
+      "Location :": "ETHS"
+    }
+  },
+  {
+    "RawDate": "Sat, Nov 08",
+    "RawName": "IHSA Sectionals",
+    "RawLocation": "Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026",
+    "Details": {
+      "Bus :": "Dive 6:30 AM\nSwim 10:45 AM",
+      "Concessions :": "A concession stand will be open and selling food and drinks all meet for athletes and spectators.",
+      "Location :": "Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026",
+      "Note :": "This meet is for the top 2 swimmers and top relay in each event",
+      "Start :": "Dive 9:00 AM\nSwim 1:00 PM"
+    }
+  },
+  {
+    "RawDate": "Mon, Nov 10",
+    "RawName": "Awards Night",
+    "RawLocation": "ETHS",
+    "Details": {
+      "Location :": "ETHS",
+      "Time :": "5:30 p.m."
+    }
+  },
+  {
+    "RawDate": "Fri, Nov 14 - Nov 15",
+    "RawName": "IHSA State",
+    "RawLocation": "FMC Natatorium 275 Plaza Dr, Westmont, IL 60559",
+    "Details": {
+      "Friday :": "Bus 12 pm Start 3:30 pm",
+      "Location :": "FMC Natatorium 275 Plaza Dr, Westmont, IL 60559",
+      "Saturday :": "Bus 7:45 am Start 11 am"
+    }
+  }
+]

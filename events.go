@@ -10,23 +10,10 @@ type Event struct {
 	Location     string `json:"location"`      // "Short Location"
 	LocationFull string `json:"location_full"` // "Full Address"
 	IsHome       bool   `json:"is_home"`       // true for home events
-	Type         string `json:"type"`          // "Meeting", "Dual Meet", etc.
-	TypeClass    string `json:"type_class"`    // CSS class: "meeting", "invitational", etc.
+	Type         string `json:"type"`          // "meeting", "meet", "relay", etc.
 	Levels       string `json:"levels"`        // "JV, Varsity, etc" (optional)
+	Details      string `json:"details"`       // Additional details or important info
 }
-
-// JSON struct {
-// 	Date         respjson.Field
-// 	Time         respjson.Field
-// 	Name         respjson.Field
-// 	Location     respjson.Field
-// 	LocationFull respjson.Field
-// 	IsHome       respjson.Field
-// 	Type         respjson.Field
-// 	TypeClass    respjson.Field
-// 	Levels       respjson.Field
-// 	ExtraFields  map[string]respjson.Field
-// } `json:"-"`
 
 // PageData represents the template data structure
 type PageData struct {
