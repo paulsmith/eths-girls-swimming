@@ -136,11 +136,110 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             border: 3px solid #e5e7eb;
+            cursor: pointer;
         }
 
         .competition-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+        }
+
+        dialog {
+            padding: 0;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            width: min(500px, 90vw);
+            max-height: 80vh;
+            overflow: auto;
+            position: fixed;
+            inset: 0;
+            margin: auto;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+
+        .dialog-header {
+            background: linear-gradient(135deg, #1a2741 0%, #c34614 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+        }
+
+        .dialog-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .dialog-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .dialog-body {
+            padding: 1.5rem;
+        }
+
+        .dialog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 2rem 0.5rem 0;
+        }
+
+        .dialog-subtitle {
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #4b5563;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        .maps-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #c34614;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border: 2px solid #c34614;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .maps-link:hover {
+            background: #c34614;
+            color: white;
         }
 
         .comp-date {
@@ -372,7 +471,16 @@
         <div id="competitions-container">
             <div class="competitions-grid" id="competitions-list">
                 {{range .Events}}
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="{{.Date}}"
+                     data-time="{{.Time}}"
+                     data-name="{{.Name}}"
+                     data-location="{{.Location}}"
+                     data-location-full="{{.LocationFull}}"
+                     data-is-home="{{.IsHome}}"
+                     data-type="{{.Type}}"
+                     data-levels="{{.Levels}}"
+                     data-details="{{.Details}}">
                     <div class="comp-date">{{.Date}}</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -394,6 +502,42 @@
                 {{end}}
             </div>
         </div>
+
+        <dialog id="event-dialog">
+            <div class="dialog-header">
+                <h2 class="dialog-title" id="dialog-title"></h2>
+                <p class="dialog-subtitle" id="dialog-subtitle"></p>
+                <button class="dialog-close" onclick="document.getElementById('event-dialog').close()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="dialog-body">
+                <div class="detail-section">
+                    <div class="detail-label">Date & Time</div>
+                    <div class="detail-value" id="dialog-datetime"></div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Location</div>
+                    <div class="detail-value" id="dialog-location"></div>
+                    <a href="#" id="dialog-maps-link" class="maps-link" target="_blank" rel="noopener">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                        </svg>
+                        View in Google Maps
+                    </a>
+                </div>
+                <div class="detail-section" id="dialog-levels-section" style="display: none;">
+                    <div class="detail-label">Levels</div>
+                    <div class="detail-value" id="dialog-levels"></div>
+                </div>
+                <div class="detail-section" id="dialog-details-section" style="display: none;">
+                    <div class="detail-label">Additional Details</div>
+                    <div class="detail-value" id="dialog-details"></div>
+                </div>
+            </div>
+        </dialog>
     </div>
 
     <script>
@@ -461,13 +605,85 @@
             }
         }
 
-        mutePastEvents();
+        function showEventDialog(card) {
+            const dialog = document.getElementById('event-dialog');
+            
+            // Extract data from card
+            const data = {
+                name: card.dataset.name,
+                date: card.dataset.date,
+                time: card.dataset.time,
+                location: card.dataset.location,
+                locationFull: card.dataset.locationFull,
+                isHome: card.dataset.isHome === 'true',
+                type: card.dataset.type,
+                levels: card.dataset.levels,
+                details: card.dataset.details
+            };
+            
+            // Populate dialog content
+            document.getElementById('dialog-title').textContent = data.name;
+            document.getElementById('dialog-subtitle').textContent = data.type;
+            document.getElementById('dialog-datetime').textContent = `${data.date} at ${data.time}`;
+            
+            // Location section
+            const locationText = data.locationFull || data.location;
+            document.getElementById('dialog-location').textContent = locationText + (data.isHome ? ' (Home)' : '');
+            
+            // Google Maps link
+            const mapsQuery = encodeURIComponent(locationText);
+            document.getElementById('dialog-maps-link').href = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+            
+            // Levels section (show only if has levels)
+            const levelsSection = document.getElementById('dialog-levels-section');
+            const levelsElement = document.getElementById('dialog-levels');
+            if (data.levels && data.levels.trim()) {
+                levelsSection.style.display = 'block';
+                levelsElement.textContent = data.levels;
+            } else {
+                levelsSection.style.display = 'none';
+            }
+            
+            // Details section (show only if has details)
+            const detailsSection = document.getElementById('dialog-details-section');
+            const detailsElement = document.getElementById('dialog-details');
+            if (data.details && data.details.trim()) {
+                detailsSection.style.display = 'block';
+                detailsElement.textContent = data.details;
+            } else {
+                detailsSection.style.display = 'none';
+            }
+            
+            dialog.showModal();
+        }
 
-        // Override toggleView to call mutePastEvents after switching
+        function setupCardClickHandlers() {
+            document.querySelectorAll('.competition-card').forEach(card => {
+                card.addEventListener('click', () => showEventDialog(card));
+            });
+        }
+
+        function setupDialogClickDismissal() {
+            const dialog = document.getElementById('event-dialog');
+            dialog.addEventListener('click', (e) => {
+                if (e.target === dialog) {
+                    dialog.close();
+                }
+            });
+        }
+
+        mutePastEvents();
+        setupCardClickHandlers();
+        setupDialogClickDismissal();
+
+        // Override toggleView to call mutePastEvents and setup handlers after switching
         const originalToggleView = toggleView;
         toggleView = function() {
             originalToggleView();
-            setTimeout(mutePastEvents, 10);
+            setTimeout(() => {
+                mutePastEvents();
+                setupCardClickHandlers();
+            }, 10);
         };
 
         console.log(`Loaded ${totalCompetitions} competitions`);

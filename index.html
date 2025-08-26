@@ -136,11 +136,110 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             border: 3px solid #e5e7eb;
+            cursor: pointer;
         }
 
         .competition-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+        }
+
+        dialog {
+            padding: 0;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            width: min(500px, 90vw);
+            max-height: 80vh;
+            overflow: auto;
+            position: fixed;
+            inset: 0;
+            margin: auto;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+
+        .dialog-header {
+            background: linear-gradient(135deg, #1a2741 0%, #c34614 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+        }
+
+        .dialog-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .dialog-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .dialog-body {
+            padding: 1.5rem;
+        }
+
+        .dialog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 2rem 0.5rem 0;
+        }
+
+        .dialog-subtitle {
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #4b5563;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        .maps-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #c34614;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border: 2px solid #c34614;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .maps-link:hover {
+            background: #c34614;
+            color: white;
         }
 
         .comp-date {
@@ -372,7 +471,16 @@
         <div id="competitions-container">
             <div class="competitions-grid" id="competitions-list">
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Wednesday, August 13, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="Swimmer &amp; Diver &amp; Parent Meeting"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meeting"
+                     data-levels=""
+                     data-details="Swim and Dive Parent Meeting 5:30-6 pm at the pool.">
                     <div class="comp-date">Wednesday, August 13, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -392,7 +500,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Thursday, August 21, 2025"
+                     data-time="6:15 PM CT"
+                     data-name="All Sports Athletes &amp; Parent Meeting"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meeting"
+                     data-levels=""
+                     data-details="Parent Meeting in the Auditorium from 6:15-7:45 pm">
                     <div class="comp-date">Thursday, August 21, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -412,7 +529,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, August 29, 2025"
+                     data-time="5:00 PM CT"
+                     data-name="Loyola"
+                     data-location="Loyola Academy"
+                     data-location-full="Loyola Academy, 1100 Laramie Ave, Wilmette, IL 60091"
+                     data-is-home="false"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Bus departs at 3:45 PM">
                     <div class="comp-date">Friday, August 29, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -432,7 +558,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, August 30, 2025"
+                     data-time="10:30 AM CT"
+                     data-name="Lake Forest Relays"
+                     data-location="Lake Forest High School"
+                     data-location-full="1285 N McKinley Rd, Lake Forest, IL 60045"
+                     data-is-home="false"
+                     data-type="relay"
+                     data-levels=""
+                     data-details="Bus Dive: 6:15 AM, Dive Start: 8:30 AM">
                     <div class="comp-date">Saturday, August 30, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -452,7 +587,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, September 12, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="Niles North"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Warmup at 3:45 PM">
                     <div class="comp-date">Friday, September 12, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -472,7 +616,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, September 19, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="Highland Park"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Warmup: 3:45 PM">
                     <div class="comp-date">Friday, September 19, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -492,7 +645,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, September 20, 2025"
+                     data-time="11:00 AM CT"
+                     data-name="New Trier"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Warmup: 9:30 AM">
                     <div class="comp-date">Saturday, September 20, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -512,7 +674,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, September 20, 2025"
+                     data-time="11:00 AM CT"
+                     data-name="New Trier JV2 JV3 &amp; Diving"
+                     data-location="New Trier High School"
+                     data-location-full="New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093"
+                     data-is-home="false"
+                     data-type="meet"
+                     data-levels="JV2, JV3, Diving"
+                     data-details="Diving starts at 9:00 AM, Bus departs at 7:30 AM">
                     <div class="comp-date">Saturday, September 20, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -532,7 +703,16 @@
                     <div class="levels">JV2, JV3, Diving</div>
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, September 26, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="Deerfield"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Warmup at 3:45 PM">
                     <div class="comp-date">Friday, September 26, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -552,7 +732,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, September 27, 2025"
+                     data-time="1:00 PM CT"
+                     data-name="Evanston Invite"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="invitational"
+                     data-levels=""
+                     data-details="Warmup at 11:30 am. All swimmers are expected to be at meet. If you are not entered in meet you may arrive at 12:30 pm.">
                     <div class="comp-date">Saturday, September 27, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -572,7 +761,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, October 3, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="GBS"
+                     data-location="Glenbrook South High School"
+                     data-location-full="Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026"
+                     data-is-home="false"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Bus departs at 3:45 PM">
                     <div class="comp-date">Friday, October 3, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -592,7 +790,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, October 10, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="GBN"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Warmup at 3:45 PM">
                     <div class="comp-date">Friday, October 10, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -612,7 +819,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, October 10, 2025"
+                     data-time="6:15 PM CT"
+                     data-name="Senior Night"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="special"
+                     data-levels=""
+                     data-details="Start time around 6:15 pm">
                     <div class="comp-date">Friday, October 10, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -632,7 +848,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, October 11, 2025"
+                     data-time="11:00 AM CT"
+                     data-name="New Trier Relays"
+                     data-location="New Trier High School"
+                     data-location-full="New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093"
+                     data-is-home="false"
+                     data-type="relay"
+                     data-levels=""
+                     data-details="Bus departs at 8:45 AM">
                     <div class="comp-date">Saturday, October 11, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -652,7 +877,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, October 18, 2025"
+                     data-time="9:00 AM CT"
+                     data-name="Libertyville JV"
+                     data-location="Libertyville High School"
+                     data-location-full="708 W Park Ave, Libertyville, IL 60048"
+                     data-is-home="false"
+                     data-type="meet"
+                     data-levels="JV"
+                     data-details="Bus departure at 7:00 AM">
                     <div class="comp-date">Saturday, October 18, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -672,7 +906,16 @@
                     <div class="levels">JV</div>
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, October 18, 2025"
+                     data-time="12:00 PM CT"
+                     data-name="Deerfield Invite"
+                     data-location="Deerfield High School"
+                     data-location-full="1959 Waukegan Rd, Deerfield, IL 60015"
+                     data-is-home="false"
+                     data-type="invitational"
+                     data-levels=""
+                     data-details="Bus departure at 9:45 AM">
                     <div class="comp-date">Saturday, October 18, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -692,7 +935,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, October 24, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="Maine South"
+                     data-location="Maine South High School"
+                     data-location-full="1111 S Dee Rd, Park Ridge, IL 60068"
+                     data-is-home="false"
+                     data-type="meet"
+                     data-levels=""
+                     data-details="Bus departs at 3:45 PM">
                     <div class="comp-date">Friday, October 24, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -712,7 +964,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, October 25, 2025"
+                     data-time="12:00 PM CT"
+                     data-name="Frosh Conference"
+                     data-location="New Trier High School"
+                     data-location-full="New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093"
+                     data-is-home="false"
+                     data-type="conference"
+                     data-levels="Freshmen"
+                     data-details="Bus departs at 10:00 am. All Freshmen from the 12 team Central Suburban League Conference.">
                     <div class="comp-date">Saturday, October 25, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -732,7 +993,16 @@
                     <div class="levels">Freshmen</div>
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, October 31, 2025"
+                     data-time="5:00 PM CT"
+                     data-name="CSL JV Invite"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="invitational"
+                     data-levels="JV"
+                     data-details="Warmup at 3:45 PM. Meet is for swimmers not competing in JV or Varsity Conference.">
                     <div class="comp-date">Friday, October 31, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -752,7 +1022,16 @@
                     <div class="levels">JV</div>
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, November 1, 2025"
+                     data-time="11:00 AM CT"
+                     data-name="CSL JV and Varsity"
+                     data-location="Glenbrook North High School"
+                     data-location-full="2300 Shermer Rd, Northbrook, IL 60062"
+                     data-is-home="false"
+                     data-type="meet"
+                     data-levels="JV and Varsity"
+                     data-details="Bus departs at 8:15 am. Regular high school event order with breaks after 50 Free and 200 Free Relay. Top 3 swimmers per team compete at Varsity level. Next 3 swimmers compete at JV level. Approximately 30 swimmers total. Spectator admission $5.">
                     <div class="comp-date">Saturday, November 1, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -772,7 +1051,16 @@
                     <div class="levels">JV and Varsity</div>
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, November 1, 2025"
+                     data-time="10:00 AM CT"
+                     data-name="CSL JV and Varsity Diving"
+                     data-location="Deerfield High School"
+                     data-location-full="Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015"
+                     data-is-home="false"
+                     data-type="meet"
+                     data-levels="JV and Varsity"
+                     data-details="Bus departs at 7:00 AM. Top 3 swimmers/divers compete at Varsity level. Next 3 compete at JV level. Approximately 30 total swimmers from each team.">
                     <div class="comp-date">Saturday, November 1, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -792,7 +1080,16 @@
                     <div class="levels">JV and Varsity</div>
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Tuesday, November 4, 2025"
+                     data-time="TBD"
+                     data-name="End of Season Meeting"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="meeting"
+                     data-levels=""
+                     data-details="Turn in any equipment, get info about upcoming events, learn about next season and vote for captains">
                     <div class="comp-date">Tuesday, November 4, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -812,7 +1109,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Saturday, November 8, 2025"
+                     data-time="10:45 AM CT"
+                     data-name="IHSA Sectionals"
+                     data-location="Glenbrook South High School"
+                     data-location-full="4000 W. Lake Ave., Glenview, IL 60026"
+                     data-is-home="false"
+                     data-type="championship"
+                     data-levels=""
+                     data-details="Bus Dive at 6:30 AM. Concessions will be open. Dive starts at 9:00 AM, Swim starts at 1:00 PM.">
                     <div class="comp-date">Saturday, November 8, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -832,7 +1138,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Monday, November 10, 2025"
+                     data-time="5:30 PM CT"
+                     data-name="Awards Night"
+                     data-location="ETHS"
+                     data-location-full=""
+                     data-is-home="true"
+                     data-type="special"
+                     data-levels=""
+                     data-details="">
                     <div class="comp-date">Monday, November 10, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -852,7 +1167,16 @@
                     
                 </div>
                 
-                <div class="competition-card">
+                <div class="competition-card" 
+                     data-date="Friday, November 14, 2025"
+                     data-time="3:30 PM CT"
+                     data-name="IHSA State"
+                     data-location="FMC Natatorium"
+                     data-location-full="FMC Natatorium 275 Plaza Dr, Westmont, IL 60559"
+                     data-is-home="false"
+                     data-type="championship"
+                     data-levels=""
+                     data-details="Bus departure Friday at 12 pm, Saturday bus at 7:45 am, Start time Saturday 11 am">
                     <div class="comp-date">Friday, November 14, 2025</div>
                     <div class="comp-time">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
@@ -874,6 +1198,42 @@
                 
             </div>
         </div>
+
+        <dialog id="event-dialog">
+            <div class="dialog-header">
+                <h2 class="dialog-title" id="dialog-title"></h2>
+                <p class="dialog-subtitle" id="dialog-subtitle"></p>
+                <button class="dialog-close" onclick="document.getElementById('event-dialog').close()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="dialog-body">
+                <div class="detail-section">
+                    <div class="detail-label">Date & Time</div>
+                    <div class="detail-value" id="dialog-datetime"></div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">Location</div>
+                    <div class="detail-value" id="dialog-location"></div>
+                    <a href="#" id="dialog-maps-link" class="maps-link" target="_blank" rel="noopener">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                        </svg>
+                        View in Google Maps
+                    </a>
+                </div>
+                <div class="detail-section" id="dialog-levels-section" style="display: none;">
+                    <div class="detail-label">Levels</div>
+                    <div class="detail-value" id="dialog-levels"></div>
+                </div>
+                <div class="detail-section" id="dialog-details-section" style="display: none;">
+                    <div class="detail-label">Additional Details</div>
+                    <div class="detail-value" id="dialog-details"></div>
+                </div>
+            </div>
+        </dialog>
     </div>
 
     <script>
@@ -941,13 +1301,85 @@
             }
         }
 
+        function showEventDialog(card) {
+            const dialog = document.getElementById('event-dialog');
+            
+            
+            const data = {
+                name: card.dataset.name,
+                date: card.dataset.date,
+                time: card.dataset.time,
+                location: card.dataset.location,
+                locationFull: card.dataset.locationFull,
+                isHome: card.dataset.isHome === 'true',
+                type: card.dataset.type,
+                levels: card.dataset.levels,
+                details: card.dataset.details
+            };
+            
+            
+            document.getElementById('dialog-title').textContent = data.name;
+            document.getElementById('dialog-subtitle').textContent = data.type;
+            document.getElementById('dialog-datetime').textContent = `${data.date} at ${data.time}`;
+            
+            
+            const locationText = data.locationFull || data.location;
+            document.getElementById('dialog-location').textContent = locationText + (data.isHome ? ' (Home)' : '');
+            
+            
+            const mapsQuery = encodeURIComponent(locationText);
+            document.getElementById('dialog-maps-link').href = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+            
+            
+            const levelsSection = document.getElementById('dialog-levels-section');
+            const levelsElement = document.getElementById('dialog-levels');
+            if (data.levels && data.levels.trim()) {
+                levelsSection.style.display = 'block';
+                levelsElement.textContent = data.levels;
+            } else {
+                levelsSection.style.display = 'none';
+            }
+            
+            
+            const detailsSection = document.getElementById('dialog-details-section');
+            const detailsElement = document.getElementById('dialog-details');
+            if (data.details && data.details.trim()) {
+                detailsSection.style.display = 'block';
+                detailsElement.textContent = data.details;
+            } else {
+                detailsSection.style.display = 'none';
+            }
+            
+            dialog.showModal();
+        }
+
+        function setupCardClickHandlers() {
+            document.querySelectorAll('.competition-card').forEach(card => {
+                card.addEventListener('click', () => showEventDialog(card));
+            });
+        }
+
+        function setupDialogClickDismissal() {
+            const dialog = document.getElementById('event-dialog');
+            dialog.addEventListener('click', (e) => {
+                if (e.target === dialog) {
+                    dialog.close();
+                }
+            });
+        }
+
         mutePastEvents();
+        setupCardClickHandlers();
+        setupDialogClickDismissal();
 
         
         const originalToggleView = toggleView;
         toggleView = function() {
             originalToggleView();
-            setTimeout(mutePastEvents, 10);
+            setTimeout(() => {
+                mutePastEvents();
+                setupCardClickHandlers();
+            }, 10);
         };
 
         console.log(`Loaded ${totalCompetitions} competitions`);
