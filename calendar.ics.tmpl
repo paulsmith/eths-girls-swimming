@@ -1,0 +1,22 @@
+{{/* ABOUTME: ICS calendar template for ETHS Wildkits Girls Swimming events */}}
+{{/* ABOUTME: Generates iCalendar format for swimming competition schedule using Go text/template */}}BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//paulsmith.github.io//ETHS Girls Swimming//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:ETHS Girls Swimming
+{{range $i, $event := .Events}}BEGIN:VEVENT
+DTSTART:{{$event.FormatStartTime}}
+DTEND:{{$event.FormatEndTime}}
+DTSTAMP:{{$.CreatedTime}}
+UID:eths-girls-swim-{{$event.FormatUID $i}}@paulsmith.github.io
+CREATED:{{$.CreatedTime}}
+DESCRIPTION:ETHS Girls Swimming {{$event.Type}}
+LAST-MODIFIED:{{$.CreatedTime}}
+{{if $event.LocationFull}}LOCATION:{{$event.LocationFull}}{{else}}LOCATION:{{$event.Location}}{{end}}
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:ETHS Girls Swimming - {{$event.Name}}
+TRANSP:TRANSPARENT
+END:VEVENT
+{{end}}END:VCALENDAR

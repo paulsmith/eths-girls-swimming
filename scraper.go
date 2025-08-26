@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"html/template"
+	htmlTemplate "html/template"
 	"io"
 	"log"
 	"net/http"
@@ -17,6 +17,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	textTemplate "text/template"
 	"time"
 
 	"github.com/anthropics/anthropic-sdk-go"
@@ -649,7 +650,7 @@ func (s *Scraper) classifyEventType(name string) string {
 func (s *Scraper) generateHTML(ctx context.Context, events []Event) error {
 	log.Printf("Generating HTML with %d events", len(events))
 
-	tmpl, err := template.ParseFiles("index.tmpl")
+	tmpl, err := htmlTemplate.ParseFiles("index.tmpl")
 	if err != nil {
 		return fmt.Errorf("failed to parse template: %w", err)
 	}
@@ -668,6 +669,34 @@ func (s *Scraper) generateHTML(ctx context.Context, events []Event) error {
 	}
 
 	log.Printf("HTML generated successfully: index.html")
+	return nil
+}
+
+func (s *Scraper) generateCalendar(ctx context.Context, events []Event) error {
+	log.Printf("Generating ICS calendar with %d events", len(events))
+
+	tmpl, err := textTemplate.ParseFiles("calendar.ics.tmpl")
+	if err != nil {
+		return fmt.Errorf("failed to parse calendar template: %w", err)
+	}
+
+	data := CalendarData{
+		Events:      events,
+		CreatedTime: time.Now().UTC().Format("20060102T150405Z"),
+	}
+
+	var buf bytes.Buffer
+	err = tmpl.Execute(&buf, data)
+	if err != nil {
+		return fmt.Errorf("failed to execute calendar template: %w", err)
+	}
+
+	err = os.WriteFile("calendar.ics", buf.Bytes(), 0644)
+	if err != nil {
+		return fmt.Errorf("failed to write calendar file: %w", err)
+	}
+
+	log.Printf("Calendar generated successfully: calendar.ics")
 	return nil
 }
 
@@ -747,7 +776,29 @@ func (s *Scraper) Run(ctx context.Context) error {
 			}
 		}
 
-		return s.generateHTML(ctx, events)
+		if err := s.generateHTML(ctx, events); err != nil {
+			return err
+		}
+
+		if s.config.Pipeline.StopAtPhase == "html" {
+			log.Printf("Stopping after HTML phase as requested")
+			return nil
+		}
+	}
+
+	// Phase 4: Generate Calendar
+	if s.shouldRunPhase("calendar") {
+		log.Printf("=== Phase 4: Generating Calendar ===")
+		if events == nil {
+			events, err = s.loadProcessedData()
+			if err != nil {
+				return fmt.Errorf("failed to load processed data: %w", err)
+			}
+		}
+
+		if err := s.generateCalendar(ctx, events); err != nil {
+			return err
+		}
 	}
 
 	log.Printf("Pipeline completed successfully")
@@ -756,7 +807,7 @@ func (s *Scraper) Run(ctx context.Context) error {
 
 // shouldRunPhase determines if a phase should be executed based on configuration
 func (s *Scraper) shouldRunPhase(phase string) bool {
-	phases := []string{"scrape", "process", "html"}
+	phases := []string{"scrape", "process", "html", "calendar"}
 
 	startIdx := 0
 	endIdx := len(phases) - 1
@@ -795,8 +846,8 @@ func (s *Scraper) shouldRunPhase(phase string) bool {
 
 func main() {
 	var (
-		startFrom = flag.String("from", "", "Start from phase: scrape, process, html")
-		stopAt    = flag.String("to", "", "Stop at phase: scrape, process, html")
+		startFrom = flag.String("from", "", "Start from phase: scrape, process, html, calendar")
+		stopAt    = flag.String("to", "", "Stop at phase: scrape, process, html, calendar")
 		verbose   = flag.Bool("v", false, "Verbose logging")
 		help      = flag.Bool("h", false, "Show help")
 	)
@@ -808,26 +859,29 @@ func main() {
 Usage: %s [OPTIONS]
 
 Pipeline Phases:
-  scrape   - Scrape competition data from wildkitaquatics.com
-  process  - Process scraped data with LLM (requires ANTHROPIC_API_KEY)
-  html     - Generate HTML calendar from processed data
+  scrape     - Scrape competition data from wildkitaquatics.com
+  process    - Process scraped data with LLM (requires ANTHROPIC_API_KEY)
+  html       - Generate HTML calendar from processed data
+  calendar   - Generate ICS calendar file from processed data
 
 Options:
 `, prog)
 		flag.PrintDefaults()
 		fmt.Fprintf(os.Stderr, `
 Examples:
-  %s                          # Run full pipeline (scrape -> process -> html)
-  %s -from scrape -to scrape  # Only scrape data, save to scraped_data.json
-  %s -from process            # Skip scraping, process existing data
-  %s -from html               # Only generate HTML from processed_events.json
-  %s -v                       # Run with verbose logging
+  %s                            # Run full pipeline (scrape -> process -> html -> calendar)
+  %s -from scrape -to scrape    # Only scrape data, save to scraped_data.json
+  %s -from process              # Skip scraping, process existing data
+  %s -from html                 # Only generate HTML from processed_events.json
+  %s -from calendar             # Only generate ICS calendar from processed_events.json
+  %s -v                         # Run with verbose logging
 
 Files:
   scraped_data.json      # Raw scraped competition data
   processed_events.json  # LLM-processed event data  
   index.html             # Generated calendar HTML
-`, prog, prog, prog, prog, prog)
+  calendar.ics           # Generated ICS calendar file
+`, prog, prog, prog, prog, prog, prog)
 	}
 
 	flag.Parse()
@@ -846,12 +900,12 @@ Files:
 	}
 
 	// Validate phase names
-	validPhases := map[string]bool{"scrape": true, "process": true, "html": true}
+	validPhases := map[string]bool{"scrape": true, "process": true, "html": true, "calendar": true}
 	if config.Pipeline.StartFromPhase != "" && !validPhases[config.Pipeline.StartFromPhase] {
-		log.Fatalf("Invalid start phase: %s (must be: scrape, process, html)", config.Pipeline.StartFromPhase)
+		log.Fatalf("Invalid start phase: %s (must be: scrape, process, html, calendar)", config.Pipeline.StartFromPhase)
 	}
 	if config.Pipeline.StopAtPhase != "" && !validPhases[config.Pipeline.StopAtPhase] {
-		log.Fatalf("Invalid stop phase: %s (must be: scrape, process, html)", config.Pipeline.StopAtPhase)
+		log.Fatalf("Invalid stop phase: %s (must be: scrape, process, html, calendar)", config.Pipeline.StopAtPhase)
 	}
 
 	scraper := NewScraper(config)
