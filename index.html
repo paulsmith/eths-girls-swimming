@@ -882,7 +882,7 @@
 
         function toggleView() {
             const container = document.getElementById('competitions-container');
-            const cards = document.querySelectorAll('.competition-card');
+            const cards = Array.from(document.querySelectorAll('.competition-card'));
 
             if (currentView === 'grid') {
                 
@@ -943,11 +943,12 @@
 
         mutePastEvents();
 
+        
         const originalToggleView = toggleView;
-        function toggleView() {
+        toggleView = function() {
             originalToggleView();
-            setTimeout(mutePastEvents, 50);
-        }
+            setTimeout(mutePastEvents, 10);
+        };
 
         console.log(`Loaded ${totalCompetitions} competitions`);
     </script>
