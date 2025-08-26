@@ -253,6 +253,30 @@
             box-shadow: 0 0 0 2px #e5e7eb;
         }
 
+        .competition-card.past-event {
+            opacity: 0.4;
+            filter: grayscale(0.7);
+        }
+
+        .timeline-item .competition-card.past-event {
+            opacity: 0.4;
+            filter: grayscale(0.7);
+        }
+
+        .competition-card.next-event {
+            border-color: #c34614;
+            border-width: 3px;
+            box-shadow: 0 4px 16px rgba(195, 70, 20, 0.3);
+            background: linear-gradient(135deg, #ffffff 0%, #fef5f3 100%);
+        }
+
+        .timeline-item .competition-card.next-event {
+            border-color: #c34614;
+            border-width: 3px;
+            box-shadow: 0 4px 16px rgba(195, 70, 20, 0.3);
+            background: linear-gradient(135deg, #ffffff 0%, #fef5f3 100%);
+        }
+
         .home-indicator {
             color: #c34614;
             margin-left: 0.5rem;
@@ -868,6 +892,48 @@
                 });
             }
         }
+        
+        function mutePastEvents() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const allCards = document.querySelectorAll('.competition-card');
+            let nextEvent = null;
+            let nextEventDate = null;
+            
+            allCards.forEach(card => {
+                card.classList.remove('past-event', 'next-event');
+                
+                const dateElement = card.querySelector('.comp-date');
+                if (dateElement) {
+                    const eventDateText = dateElement.textContent.trim();
+                    const eventDate = new Date(eventDateText);
+                    eventDate.setHours(0, 0, 0, 0);
+                    
+                    if (eventDate < today) {
+                        card.classList.add('past-event');
+                    } else if (eventDate >= today) {
+                        if (!nextEventDate || eventDate < nextEventDate) {
+                            nextEvent = card;
+                            nextEventDate = eventDate;
+                        }
+                    }
+                }
+            });
+            
+            if (nextEvent) {
+                nextEvent.classList.add('next-event');
+            }
+        }
+
+        mutePastEvents();
+
+        const originalToggleView = toggleView;
+        function toggleView() {
+            originalToggleView();
+            setTimeout(mutePastEvents, 50);
+        }
+
         console.log(`Loaded ${totalCompetitions} competitions`);
     </script>
 </body>
