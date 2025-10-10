@@ -19,106 +19,117 @@
     "is_home": true,
     "type": "meeting",
     "levels": "",
-    "details": "Parent Meeting in the Auditorium from 6:15-7:45 pm"
+    "details": "Parent Meeting for All Sports in the Auditorium"
   },
   {
     "date": "Friday, August 29, 2025",
-    "time": "5:00 PM CT",
+    "time": "TBD",
     "name": "Loyola",
     "location": "Loyola Academy",
     "location_full": "Loyola Academy, 1100 Laramie Ave, Wilmette, IL 60091",
     "is_home": false,
     "type": "meet",
     "levels": "",
-    "details": "Bus departs at 3:45 PM"
+    "details": ""
   },
   {
     "date": "Saturday, August 30, 2025",
-    "time": "10:30 AM CT",
+    "time": "TBD",
     "name": "Lake Forest Relays",
     "location": "Lake Forest High School",
     "location_full": "1285 N McKinley Rd, Lake Forest, IL 60045",
     "is_home": false,
     "type": "relay",
     "levels": "",
-    "details": "Bus Dive: 6:15 AM, Dive Start: 8:30 AM"
+    "details": ""
   },
   {
     "date": "Friday, September 12, 2025",
-    "time": "5:30 PM CT",
+    "time": "TBD",
     "name": "Niles North",
     "location": "ETHS",
     "location_full": "",
     "is_home": true,
     "type": "meet",
     "levels": "",
-    "details": "Warmup at 3:45 PM"
+    "details": ""
   },
   {
     "date": "Friday, September 19, 2025",
-    "time": "5:30 PM CT",
+    "time": "TBD",
     "name": "Highland Park",
     "location": "ETHS",
     "location_full": "",
     "is_home": true,
     "type": "meet",
     "levels": "",
-    "details": "Warmup: 3:45 PM"
+    "details": ""
   },
   {
     "date": "Saturday, September 20, 2025",
-    "time": "11:00 AM CT",
+    "time": "TBD",
     "name": "New Trier",
     "location": "ETHS",
     "location_full": "",
     "is_home": true,
     "type": "meet",
     "levels": "",
-    "details": "Warmup: 9:30 AM"
+    "details": ""
   },
   {
     "date": "Saturday, September 20, 2025",
-    "time": "11:00 AM CT",
+    "time": "TBD",
     "name": "New Trier JV2 JV3 \u0026 Diving",
     "location": "New Trier High School",
     "location_full": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
     "is_home": false,
     "type": "meet",
     "levels": "JV2, JV3, Diving",
-    "details": "Diving starts at 9:00 AM, Bus departs at 7:30 AM"
+    "details": ""
   },
   {
     "date": "Friday, September 26, 2025",
-    "time": "5:30 PM CT",
+    "time": "TBD",
     "name": "Deerfield",
     "location": "ETHS",
     "location_full": "",
     "is_home": true,
     "type": "meet",
     "levels": "",
-    "details": "Warmup at 3:45 PM"
+    "details": ""
   },
   {
     "date": "Saturday, September 27, 2025",
-    "time": "1:00 PM CT",
+    "time": "TBD",
     "name": "Evanston Invite",
     "location": "ETHS",
     "location_full": "",
     "is_home": true,
     "type": "invitational",
     "levels": "",
-    "details": "Warmup at 11:30 am. All swimmers are expected to be at meet. If you are not entered in meet you may arrive at 12:30 pm."
+    "details": ""
   },
   {
     "date": "Friday, October 3, 2025",
-    "time": "5:30 PM CT",
+    "time": "TBD",
     "name": "GBS",
     "location": "Glenbrook South High School",
-    "location_full": "Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026",
+    "location_full": "4000 W. Lake Ave., Glenview, IL 60026",
     "is_home": false,
     "type": "meet",
     "levels": "",
-    "details": "Bus departs at 3:45 PM"
+    "details": ""
+  },
+  {
+    "date": "Friday, October 10, 2025",
+    "time": "7:45 PM CT",
+    "name": "Senior Night",
+    "location": "ETHS",
+    "location_full": "",
+    "is_home": true,
+    "type": "special",
+    "levels": "",
+    "details": "Senior Night event at home location"
   },
   {
     "date": "Friday, October 10, 2025",
@@ -132,17 +143,6 @@
     "details": "Warmup at 3:45 PM"
   },
   {
-    "date": "Friday, October 10, 2025",
-    "time": "6:15 PM CT",
-    "name": "Senior Night",
-    "location": "ETHS",
-    "location_full": "",
-    "is_home": true,
-    "type": "special",
-    "levels": "",
-    "details": "Start time around 6:15 pm"
-  },
-  {
     "date": "Saturday, October 11, 2025",
     "time": "11:00 AM CT",
     "name": "New Trier Relays",
@@ -151,18 +151,7 @@
     "is_home": false,
     "type": "relay",
     "levels": "",
-    "details": "Bus departs at 8:45 AM"
-  },
-  {
-    "date": "Saturday, October 18, 2025",
-    "time": "9:00 AM CT",
-    "name": "Libertyville JV",
-    "location": "Libertyville High School",
-    "location_full": "708 W Park Ave, Libertyville, IL 60048",
-    "is_home": false,
-    "type": "meet",
-    "levels": "JV",
-    "details": "Bus departure at 7:00 AM"
+    "details": "Bus departure at 8:45 AM"
   },
   {
     "date": "Saturday, October 18, 2025",
@@ -173,7 +162,18 @@
     "is_home": false,
     "type": "invitational",
     "levels": "",
-    "details": "Bus departure at 9:45 AM"
+    "details": "Bus departs at 9:45 AM"
+  },
+  {
+    "date": "Saturday, October 18, 2025",
+    "time": "9:00 AM CT",
+    "name": "Libertyville JV",
+    "location": "Libertyville High School",
+    "location_full": "Libertyville High School, 708 W Park Ave, Libertyville, IL 60048",
+    "is_home": false,
+    "type": "meet",
+    "levels": "JV",
+    "details": "Bus departure at 7:00 AM"
   },
   {
     "date": "Friday, October 24, 2025",
@@ -194,8 +194,8 @@
     "location_full": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
     "is_home": false,
     "type": "conference",
-    "levels": "Freshmen",
-    "details": "Bus departs at 10:00 am. All Freshmen from the 12 team Central Suburban League Conference."
+    "levels": "Freshman",
+    "details": "Bus departs at 10:00 am. This meet is for all Freshmen from the 12 team Central Suburban League Conference."
   },
   {
     "date": "Friday, October 31, 2025",
@@ -206,18 +206,7 @@
     "is_home": true,
     "type": "invitational",
     "levels": "JV",
-    "details": "Warmup at 3:45 PM. Meet is for swimmers not competing in JV or Varsity Conference."
-  },
-  {
-    "date": "Saturday, November 1, 2025",
-    "time": "11:00 AM CT",
-    "name": "CSL JV and Varsity",
-    "location": "Glenbrook North High School",
-    "location_full": "2300 Shermer Rd, Northbrook, IL 60062",
-    "is_home": false,
-    "type": "meet",
-    "levels": "JV and Varsity",
-    "details": "Bus departs at 8:15 am. Regular high school event order with breaks after 50 Free and 200 Free Relay. Top 3 swimmers per team compete at Varsity level. Next 3 swimmers compete at JV level. Approximately 30 swimmers total. Spectator admission $5."
+    "details": "Warmup at 3:45 PM. Meet for swimmers not competing in JV or Varsity Conference."
   },
   {
     "date": "Saturday, November 1, 2025",
@@ -228,7 +217,18 @@
     "is_home": false,
     "type": "meet",
     "levels": "JV and Varsity",
-    "details": "Bus departs at 7:00 AM. Top 3 swimmers/divers compete at Varsity level. Next 3 compete at JV level. Approximately 30 total swimmers from each team."
+    "details": "Bus departure at 7:00 AM. Top 3 swimmers/divers compete at Varsity level. Next 3 swimmers/divers compete at JV level. Approximately 30 swimmers total."
+  },
+  {
+    "date": "Saturday, November 1, 2025",
+    "time": "11:00 AM CT",
+    "name": "CSL JV and Varsity",
+    "location": "Glenbrook North High School",
+    "location_full": "2300 Shermer Rd, Northbrook, IL 60062",
+    "is_home": false,
+    "type": "meet",
+    "levels": "JV and Varsity",
+    "details": "Bus departs at 8:15 am. 2 heats of relays and 3 heats of individual swimmers. Approximately 30 swimmers. Spectators allowed, $5 admission."
   },
   {
     "date": "Tuesday, November 4, 2025",
@@ -243,14 +243,14 @@
   },
   {
     "date": "Saturday, November 8, 2025",
-    "time": "10:45 AM CT",
+    "time": "1:00 PM CT",
     "name": "IHSA Sectionals",
     "location": "Glenbrook South High School",
     "location_full": "4000 W. Lake Ave., Glenview, IL 60026",
     "is_home": false,
     "type": "championship",
     "levels": "",
-    "details": "Bus Dive at 6:30 AM. Concessions will be open. Dive starts at 9:00 AM, Swim starts at 1:00 PM."
+    "details": "Bus Dive: 6:30 AM, Dive Start: 9:00 AM. Concession stand will be open."
   },
   {
     "date": "Monday, November 10, 2025",
@@ -261,7 +261,7 @@
     "is_home": true,
     "type": "special",
     "levels": "",
-    "details": ""
+    "details": "Awards ceremony for swimming team"
   },
   {
     "date": "Friday, November 14, 2025",
@@ -272,6 +272,6 @@
     "is_home": false,
     "type": "championship",
     "levels": "",
-    "details": "Bus departure Friday at 12 pm, Saturday bus at 7:45 am, Start time Saturday 11 am"
+    "details": "Bus departs at 12:00 PM on Friday. Saturday bus departs at 7:45 AM with 11:00 AM start."
   }
 ]

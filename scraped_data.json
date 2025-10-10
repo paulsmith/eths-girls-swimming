@@ -21,91 +21,63 @@
     "RawDate": "Fri, Aug 29",
     "RawName": "Loyola",
     "RawLocation": "Loyola Academy, 1100 Laramie Ave, Wilmette, IL 60091",
-    "Details": {
-      "Bus :": "3:45 pm",
-      "Location :": "Loyola Academy, 1100 Laramie Ave, Wilmette, IL 60091",
-      "Start :": "5 pm"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Sat, Aug 30",
     "RawName": "Lake Forest Relays",
     "RawLocation": "Lake Forest High School, 1285 N McKinley Rd, Lake Forest, IL 60045",
-    "Details": {
-      "Bus :": "Dive: 6:15 AM\nSwim: 10:30 AM",
-      "Location :": "Lake Forest High School, 1285 N McKinley Rd, Lake Forest, IL 60045",
-      "Start :": "Dive: 8:30 AM\nSwim: 1 PM"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Fri, Sep 12",
     "RawName": "Niles North",
     "RawLocation": "ETHS",
-    "Details": {
-      "Location :": "ETHS",
-      "Start :": "5:30 pm",
-      "Warmup :": "3:45 pm"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Fri, Sep 19",
     "RawName": "Highland Park",
     "RawLocation": "ETHS",
-    "Details": {
-      "Location :": "ETHS",
-      "Start :": "5:30 PM",
-      "Warmup :": "3:45 PM"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Sat, Sep 20",
     "RawName": "New Trier",
     "RawLocation": "ETHS",
-    "Details": {
-      "Location :": "ETHS",
-      "Start :": "11 am",
-      "Warmup :": "9:30 AM"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Sat, Sep 20",
     "RawName": "New Trier JV2 JV3 \u0026 Diving",
     "RawLocation": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
-    "Details": {
-      "Bus :": "Diving 7:30 AM Swimming 9:30 AM",
-      "Location :": "New Trier High School, 385 Winnetka Ave, Winnetka, Illinois 60093",
-      "Start :": "Diving 9:00 AM Swimming 11 AM"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Fri, Sep 26",
     "RawName": "Deerfield",
     "RawLocation": "ETHS",
-    "Details": {
-      "Location :": "ETHS",
-      "Start :": "5:30 pm",
-      "Warmup :": "3:45 PM"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Sat, Sep 27",
     "RawName": "Evanston Invite",
     "RawLocation": "ETHS",
-    "Details": {
-      "Location :": "ETHS",
-      "Meet Starts :": "1:00 pm",
-      "Note :": "All swimmers are expected to be at meet. If you are not entered in meet you may arrive at 12:30 pm.",
-      "Warmup :": "11:30 am"
-    }
+    "Details": {}
   },
   {
     "RawDate": "Fri, Oct 03",
     "RawName": "GBS",
     "RawLocation": "Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026",
+    "Details": {}
+  },
+  {
+    "RawDate": "Fri, Oct 10",
+    "RawName": "Senior Night",
+    "RawLocation": "ETHS",
     "Details": {
-      "Bus :": "3:45 PM",
-      "Location :": "Glenbrook South High School, 4000 W. Lake Ave., Glenview, IL 60026",
-      "Start :": "5:30 pm"
+      "Location :": "ETHS",
+      "Start :": "About 7:45 pm"
     }
   },
   {
@@ -116,15 +88,6 @@
       "Location :": "ETHS",
       "Start :": "5:30 PM",
       "Warmup :": "3:45 PM"
-    }
-  },
-  {
-    "RawDate": "Fri, Oct 10",
-    "RawName": "Senior Night",
-    "RawLocation": "ETHS",
-    "Details": {
-      "Location :": "ETHS",
-      "Start :": "About 6:15 pm"
     }
   },
   {
@@ -140,6 +103,16 @@
   },
   {
     "RawDate": "Sat, Oct 18",
+    "RawName": "Deerfield Invite",
+    "RawLocation": "Deerfield High School,\n1959 Waukegan Rd, Deerfield, IL 60015",
+    "Details": {
+      "Bus :": "9:45 AM",
+      "Location :": "Deerfield High School,\n1959 Waukegan Rd, Deerfield, IL 60015",
+      "Start :": "Noon"
+    }
+  },
+  {
+    "RawDate": "Sat, Oct 18",
     "RawName": "Libertyville JV",
     "RawLocation": "Libertyville High School, 708 W Park Ave, Libertyville, IL 60048",
     "Details": {
@@ -147,16 +120,6 @@
       "Location :": "Libertyville High School, 708 W Park Ave, Libertyville, IL 60048",
       "Meet Info :": "Meet Info",
       "Start :": "9 am"
-    }
-  },
-  {
-    "RawDate": "Sat, Oct 18",
-    "RawName": "Deerfield Invite",
-    "RawLocation": "Deerfield High School,\n1959 Waukegan Rd, Deerfield, IL 60015",
-    "Details": {
-      "Bus :": "9:45 AM",
-      "Location :": "Deerfield High School,\n1959 Waukegan Rd, Deerfield, IL 60015",
-      "Start :": "Noon"
     }
   },
   {
@@ -193,6 +156,17 @@
   },
   {
     "RawDate": "Sat, Nov 01",
+    "RawName": "CSL JV and Varsity Diving",
+    "RawLocation": "Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015",
+    "Details": {
+      "Bus :": "7 am",
+      "Diving Start :": "10 am",
+      "Location :": "Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015",
+      "Qualification :": "The top 3 swimmers in each event from each team and the top 3 divers compete at the Varsity level. Approximately 15 swimmers.\nThe next 3 swimmers in each event from each team and the next 3 divers compete at the JV level. Approximately another 15 swimmers for a total of about 30 swimmers from each team competing."
+    }
+  },
+  {
+    "RawDate": "Sat, Nov 01",
     "RawName": "CSL JV and Varsity",
     "RawLocation": "Glenbrook North High School, 2300 Shermer Rd, Northbrook, IL 60062",
     "Details": {
@@ -202,17 +176,6 @@
       "Qualification :": "The top 3 swimmers in each event from each team and the top 3 divers compete at the Varsity level. Approximately 15 swimmers.\nThe next 3 swimmers in each event from each team and the next 3 divers compete at the JV level. Approximately another 15 swimmers for a total of about 30 swimmers from each team competing.",
       "Spectators :": "Are allowed. Admission $5.",
       "Swimming Start :": "11 am"
-    }
-  },
-  {
-    "RawDate": "Sat, Nov 01",
-    "RawName": "CSL JV and Varsity Diving",
-    "RawLocation": "Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015",
-    "Details": {
-      "Bus :": "7 am",
-      "Diving Start :": "10 am",
-      "Location :": "Deerfield High School, 1959 Waukegan Rd, Deerfield, IL 60015",
-      "Qualification :": "The top 3 swimmers in each event from each team and the top 3 divers compete at the Varsity level. Approximately 15 swimmers.\nThe next 3 swimmers in each event from each team and the next 3 divers compete at the JV level. Approximately another 15 swimmers for a total of about 30 swimmers from each team competing."
     }
   },
   {
